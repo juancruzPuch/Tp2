@@ -96,8 +96,7 @@ void Proceso::agregar_edificio(Tipo_edificio* tipo_edificio){
  
     nueva_lista_edificios[this -> cantidad_edificios] = tipo_edificio;
 
-    if (cantidad_edificios > 0){
-
+    if (cantidad_edificios != 0){
         delete [] lista_edificios;
     } 
     
