@@ -1,7 +1,6 @@
 #include "materiales.h"
 #include "procesamiento.h"
 #include "edificios/tipos_edificios.h"
-#include "edificios/lista_edificios.h"
 #include "edificios/parcer.h"
 
 #include <iostream>
@@ -9,6 +8,18 @@
 #include <iomanip>
 
 const int CANT_CARACTERISTICAS_EDIFICIOS = 5;
+
+
+Proceso::Proceso (){
+	cantidad_edificios = 0;
+	cantidad_materiales = 0;
+	cantidad_ubicaciones = 0;
+}
+
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 
 
@@ -63,7 +74,7 @@ void Proceso::leer_opciones_edificios(){
 		Parser parser (lectura_edificios);
 		tipo_edificio = parser.procesar_entrada();
 
-        //std::cout << lista_edificios->obtener_cantidad_edificios();
+
 		agregar_edificio(tipo_edificio);
 
 	}
@@ -74,7 +85,6 @@ void Proceso::leer_opciones_edificios(){
 
 
 void Proceso::agregar_edificio(Tipo_edificio* tipo_edificio){
-
 
     Tipo_edificio** nueva_lista_edificios = new Tipo_edificio*[(this -> cantidad_edificios) + 1];
     
@@ -93,6 +103,7 @@ void Proceso::agregar_edificio(Tipo_edificio* tipo_edificio){
     
     lista_edificios = nueva_lista_edificios;
     this -> cantidad_edificios++;
+	
 }
 
 

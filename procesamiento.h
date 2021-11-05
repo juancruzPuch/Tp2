@@ -4,7 +4,7 @@
 #include "materiales.h"
 #include "edificios.h"
 #include "ubicaciones.h"
-#include "edificios/lista_edificios.h"
+#include "edificios/tipos_edificios.h"
 
 #include <iostream>
 
@@ -34,6 +34,9 @@ class Proceso{
 		int cantidad_materiales, cantidad_edificios, cantidad_ubicaciones;
 		
 	public:
+
+		//Costructor 
+		Proceso();
 
 		
 		//Precondiciones: -

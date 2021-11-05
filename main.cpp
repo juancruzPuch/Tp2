@@ -2,8 +2,7 @@
 #include "edificios.h"
 #include "ubicaciones.h"
 #include "procesamiento.h"
-#include "edificios/lista_edificios.h" 
-
+#include "edificios/tipos_edificios.h"
 
 int main(){
 
