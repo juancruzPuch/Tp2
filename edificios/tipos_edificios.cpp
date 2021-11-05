@@ -12,6 +12,8 @@ Tipo_edificio::Tipo_edificio (int piedra, int madera, int metal, int cant_max_co
     this -> cant_max_construido = cant_max_construido;
 }
 
+
+
 int Tipo_edificio::obtener_piedra(){
     return cant_piedra;
 }

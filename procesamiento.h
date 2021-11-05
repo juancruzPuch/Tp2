@@ -30,12 +30,12 @@ class Proceso{
 		Edificio *edificio;
 		Ubicacion *ubicacion;
 		Mapa *mapa;
-		Lista_edificios* lista_edificios;
+		Tipo_edificio** lista_edificios;
 		int cantidad_materiales, cantidad_edificios, cantidad_ubicaciones;
 		
 	public:
 
-
+		
 		//Precondiciones: -
 		//Postcondiciones: Guarda los datos del archivo de materiales
 		void leer_materiales();
@@ -43,6 +43,8 @@ class Proceso{
 		//Precondiciones: -
 		//Postcondiciones: Guarda los datos del archivo de edificios
 		void leer_opciones_edificios();
+		void agregar_edificio(Tipo_edificio* tipo_edificio);
+
 
 		void leer_ubicaciones();
 		void leer_mapa(int *cantidad_filas);

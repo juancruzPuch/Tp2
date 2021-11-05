@@ -64,13 +64,36 @@ void Proceso::leer_opciones_edificios(){
 		tipo_edificio = parser.procesar_entrada();
 
         //std::cout << lista_edificios->obtener_cantidad_edificios();
-		lista_edificios -> agregar_edificio(tipo_edificio);
+		agregar_edificio(tipo_edificio);
 
 	}
 	
 	archivo_edificios.close();
 }
 
+
+
+void Proceso::agregar_edificio(Tipo_edificio* tipo_edificio){
+
+
+    Tipo_edificio** nueva_lista_edificios = new Tipo_edificio*[(this -> cantidad_edificios) + 1];
+    
+    
+    for (int i = 0; i < (this -> cantidad_edificios); i++){
+        nueva_lista_edificios[i] = lista_edificios[i];
+    }
+    
+ 
+    nueva_lista_edificios[this -> cantidad_edificios] = tipo_edificio;
+
+    if (cantidad_edificios > 0){
+
+        delete [] lista_edificios;
+    } 
+    
+    lista_edificios = nueva_lista_edificios;
+    this -> cantidad_edificios++;
+}
 
 
 
@@ -177,33 +200,6 @@ void Proceso::cerrar_materiales(){
 	this->material = nullptr;
 }
 
-
-
-
-
-//----------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-
-
-
-void Proceso::cerrar_edificios(){
-
-	ofstream archivo_edificios(PATH_EDIFICIOS);
-	
-	for(int i = 0; i < this->cantidad_edificios; i++){
-		archivo_edificios << this->edificio[i].nombre_edificio << ' '
-						  << this->edificio[i].cantidad_piedra << ' '
-						  << this->edificio[i].cantidad_madera << ' '
-						  << this->edificio[i].cantidad_metal << ' '
-						  << this->edificio[i].cantidad_maxima_permitida << '\n';
-//		delete this->edificio[i];
-
-	}
-	
-	delete[] this->edificio;
-	this->edificio = nullptr;
-}
 
 
 
