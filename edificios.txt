@@ -1,0 +1,6 @@
+aserradero 50 50 50 2 
+escuela 50 50 50 2 
+fabrica 50 50 50 2 
+mina 50 50 50 2 
+obelisco 50 50 50 2 
+planta_electrica 50 50 50 2 
