@@ -26,9 +26,9 @@ class Mapa{
 class Proceso{
 
 	private:
-		Material **material;
+		Material *material;
 		Edificio *edificio;
-		Ubicacion **ubicacion;
+		Ubicacion *ubicacion;
 		Mapa *mapa;
 		Tipo_edificio** lista_edificios;
 		int cantidad_materiales, cantidad_edificios, cantidad_ubicaciones;
@@ -51,9 +51,6 @@ class Proceso{
 
 		void leer_ubicaciones();
 		void leer_mapa(int *cantidad_filas);
-		
-		void agregar_material(Material *nuevo_material);
-		void agregar_ubicacion(Ubicacion *ubicacion);
 
 		//Precondiciones: -
 		//Postcondiciones: Guarda los edificios en el archivo "edificios" y elimina la lista
