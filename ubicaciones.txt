@@ -1,0 +1,3 @@
+escuela (1, 2)
+aserradero (3, 4)
+yacimiento (5, 6)

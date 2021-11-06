@@ -7,23 +7,22 @@
 int main(){
 
 	Proceso proceso;
-
-	//int cantidad_filas;
 	
 	//proceso.leer_opciones_edificios();
 	proceso.leer_materiales();
 	proceso.leer_ubicaciones();
-	//proceso.leer_mapa(&cantidad_filas);
+	proceso.leer_mapa();
 	
-	cout << "todo ok";
+	proceso.mostrar_mapa();
+
+	cout << "todo ok" << endl;
 	
-	/*for(int i = 0; i < cantidad_filas; i++){
-		delete proceso->mapa->mapa[i];
-	}
-	delete[] poceso->mapa->mapa;*/
+	
 	
 	proceso.cerrar_materiales();
 	proceso.cerrar_ubicaciones();
+	proceso.cerrar_mapa();
+
 	
 	return 0;
 }
