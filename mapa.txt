@@ -1,3 +1,3 @@
 2 3
-L L T
-T C L
+C L T
+C T L
