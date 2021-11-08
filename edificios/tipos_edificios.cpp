@@ -1,5 +1,7 @@
 #include <iostream>
+
 #include "tipos_edificios.h"
+#include "edificio.h"
 
 
 
@@ -10,6 +12,7 @@ Tipo_edificio::Tipo_edificio (int piedra, int madera, int metal, int cant_max_co
     cant_madera = madera;
     cant_metal = metal;
     this -> cant_max_construido = cant_max_construido;
+    cantidad_constuidos = 0;
 }
 
 
@@ -29,11 +32,35 @@ int Tipo_edificio::obtener_cant_max_construido(){
 std::string Tipo_edificio::obtener_tipo(){
     return tipo_edificio;
 }
-void Tipo_edificio::mostrar(){
-    std::cout << "TIPO       \t";
-    std::cout << "PIEDRA     \t";
-    std::cout << "MADERA     \t";
-    std::cout << "METAL      \t";
-    std::cout << "CONSTRUIDOS\t";
-    std::cout << "RESTANTES  \t";
+int Tipo_edificio::obtener_cant_construidos(){
+    return cantidad_constuidos;
+}
+Edificio* Tipo_edificio::obetener_edificios_construidos(int posisicion_edificio){
+    return edificios_construidos[posisicion_edificio];
+}
+
+
+void Tipo_edificio::librerar_edificos_construidos(){
+    for (int i = 0; i < cantidad_constuidos; i++){
+        delete edificios_construidos[i];
+    }
+    delete [] edificios_construidos;
+}
+
+void Tipo_edificio::agregar_edificio_construido(Edificio* edificio){
+
+    Edificio** nuevo_edificios_construidos = new Edificio* [cantidad_constuidos + 1];
+
+    for (int i = 0; i < cantidad_constuidos; i++){
+        nuevo_edificios_construidos[i] = edificios_construidos[i];
+    }
+
+    nuevo_edificios_construidos[cantidad_constuidos] = edificio;
+
+    if (cantidad_constuidos != 0){
+        delete [] edificios_construidos;
+    }
+
+    edificios_construidos = nuevo_edificios_construidos;
+    cantidad_constuidos++;
 }

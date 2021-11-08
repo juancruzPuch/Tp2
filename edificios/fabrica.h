@@ -2,7 +2,10 @@
 #define FABRICA_H
 
 #include "tipos_edificios.h"
+#include "edificio.h"
 
+
+const char CARACTER_FABRICA = 'F';
 
 class Fabrica: public Tipo_edificio {
 public:

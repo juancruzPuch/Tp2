@@ -2,9 +2,9 @@
 #define PROCESAMIENTO_H
 
 #include "materiales.h"
-#include "edificios.h"
-#include "ubicaciones.h"
+#include "edificios/edificio.h"
 #include "edificios/tipos_edificios.h"
+#include "edificios/edificio.h"
 
 #include <iostream>
 
@@ -35,8 +35,6 @@ class Proceso{
 
 	private:
 		Material **material;
-		Edificio *edificio;
-		Ubicacion **ubicacion;
 		Mapa *mapa;
 		Tipo_edificio** lista_edificios;
 		int cantidad_materiales, cantidad_edificios, cantidad_ubicaciones;
@@ -57,7 +55,7 @@ class Proceso{
 		
 		//Precondiciones: Se tiene que haber leído bien el archivo de edificio
 		//Postcondiciones: Agrega el edificio leído a la lista de edificios disponibles
-		void agregar_edificio(Tipo_edificio* tipo_edificio);
+		void agregar_tipo_edificio(Tipo_edificio* tipo_edificio);
 
 		//Precondiciones: -
 		//Postcondiciones: Guarda los datos del archivo de ubicaciones
@@ -68,12 +66,13 @@ class Proceso{
 		void leer_mapa();
 		
 		//Precondiciones: Se tiene que haber leído bien el archivo de materiales
-	//Postcondiciones: Agrega el material leído a la lista de materiales disponibles
+		//Postcondiciones: Agrega el material leído a la lista de materiales disponibles
 		void agregar_material(Material *nuevo_material);
 		
-		//Precondiciones: Se tiene que haber leído bien el archivo de ubicaciones
+		//Precondiciones: Se tiene que haber leído bien el archivo de ubicaciones //(modificar)
 		//Postcondiciones: Agrega la ubicación leída a la lista de ubicaciones
-		void agregar_ubicacion(Ubicacion *ubicacion);
+		int identificar_edificio(Edificio *edificio, string tipo_edficio);
+		
 		
 		void listar_edificios();
 		

@@ -2,6 +2,10 @@
 #define ASERRADERO_H
 
 #include "tipos_edificios.h"
+#include "edificio.h"
+
+
+const char CARACTER_ASERRADERO = 'A';
 
 class Aserradero: public Tipo_edificio{
 

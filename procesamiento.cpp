@@ -2,10 +2,13 @@
 #include "procesamiento.h"
 #include "edificios/tipos_edificios.h"
 #include "edificios/parcer.h"
+#include "edificios/edificio.h"
 
 #include <iostream>
+#include <string>
 #include <fstream>
 #include <iomanip>
+#include <cstdlib>
 
 const int CANT_CARACTERISTICAS_EDIFICIOS = 5;
 
@@ -45,6 +48,77 @@ void Proceso::leer_materiales(){
 }
 
 
+void Proceso::agregar_material(Material *nuevo_material){
+
+	Material **vector_materiales = new Material*[this->cantidad_materiales + 1];
+	if(vector_materiales == NULL)
+		delete[] vector_materiales;
+	
+	for(int i = 0; i < this->cantidad_materiales; i++)
+		vector_materiales[i] = this->material[i];
+		
+	vector_materiales[this->cantidad_materiales] = nuevo_material;
+	
+	if(this->cantidad_materiales != 0){
+		delete[] this->material;
+	}
+	
+	this->material = vector_materiales;
+	this->cantidad_materiales++;	
+
+}
+
+
+
+
+void Proceso::cerrar_materiales(){
+
+	ofstream archivo_materiales(PATH_MATERIALES);
+	
+	for(int i = 0; i < this->cantidad_materiales; i++){
+		archivo_materiales << this -> material[i] -> nombre_material << ' '
+						   << this -> material[i] -> cantidad_material << '\n';
+		//delete this->material[i];
+	}
+	
+	delete[] this->material;
+	this->material = nullptr;
+}
+
+
+
+
+void Proceso::mostrar_inventario(){
+
+	long nombre_mas_largo = 0;
+	long nombre = 0;
+
+	cout << endl << endl;
+	cout << "Lista de materiales propios:" << endl << endl;
+	
+	cout << "            ═══════════════════════════════" << endl;
+	cout << "             Materiales        Cantidades"<< endl;
+	cout << "            ═══════════════════════════════" << endl;
+	
+	for(int i = 0; i < this->cantidad_edificios; i++){
+		nombre = this->material[i]->nombre_material.length();
+		if(nombre > nombre_mas_largo)
+			nombre_mas_largo = nombre;
+	}
+	
+	for(int i = 0; i < this->cantidad_materiales; i++){
+		long espacio = nombre_mas_largo - this->material[i]->nombre_material.length();
+		cout << "              " << this->material[i]->nombre_material;
+		cout << setw(23 + (int)espacio);
+		cout << this->material[i]->cantidad_material <<endl;
+	}
+}
+
+
+
+
+
+
 
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -72,7 +146,7 @@ void Proceso::leer_opciones_edificios(){
 		tipo_edificio = parser.procesar_entrada();
 
 
-		agregar_edificio(tipo_edificio);
+		agregar_tipo_edificio(tipo_edificio);
 
 	}
 	
@@ -80,11 +154,9 @@ void Proceso::leer_opciones_edificios(){
 }
 
 
-//----------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-
-void Proceso::agregar_edificio(Tipo_edificio* tipo_edificio){
+void Proceso::agregar_tipo_edificio(Tipo_edificio* tipo_edificio){
 
     Tipo_edificio** nueva_lista_edificios = new Tipo_edificio*[(this -> cantidad_edificios) + 1];
     
@@ -100,43 +172,115 @@ void Proceso::agregar_edificio(Tipo_edificio* tipo_edificio){
         delete [] lista_edificios;
     } 
     
-    this->lista_edificios = nueva_lista_edificios;
+    this -> lista_edificios = nueva_lista_edificios;
     this -> cantidad_edificios++;
 	
 }
 
 
 
-//----------------------------------------------------------------------------------------------------------------------------------------------------
 
+
+
+
+void Proceso::listar_edificios(){
+
+	cout << endl << endl;
+	cout << "Lista de edificios:" << endl << endl;
+	cout << "            ════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════" << endl;
+	cout << "             Nombre\t\tPiedra\t\tMadera\t\tMetal\t\tCantidad construida\tCuantos más se pueden construir"<< endl;
+	cout << "            ════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════" << endl;
+	
+	long nombre_mas_largo = 0;
+	long nombre = 0;
+	for(int i = 0; i < this->cantidad_edificios; i++){
+		nombre = this -> lista_edificios[i] -> obtener_tipo().length();
+		if(nombre > nombre_mas_largo)
+			nombre_mas_largo = nombre;
+	}	
+	for(int i = 0; i < this->cantidad_edificios; i++){
+		long espacio = nombre_mas_largo - this -> lista_edificios[i] -> obtener_tipo().length();
+		cout << "             " << this -> lista_edificios[i] -> obtener_tipo();
+		cout << setw(12 + (int)espacio);
+		cout << this -> lista_edificios[i] -> obtener_piedra() << setw(16);
+		cout << this -> lista_edificios[i] -> obtener_madera() << setw(16);
+		cout << this -> lista_edificios[i] -> obtener_metal() << setw(23);
+		cout << this -> lista_edificios[i] -> obtener_cant_max_construido() - this -> lista_edificios[i] -> obtener_cant_construidos() << endl;
+	}
+}
+
+
+
+
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 void Proceso::leer_ubicaciones(){
 
 	fstream archivo_ubicaciones(PATH_UBICACIONES, ios::in);
+	Edificio* edificio;
 	
-	this->cantidad_ubicaciones = 0;
-	Ubicacion *ubicacion;
-	string nombre_edificio;
+	int posicicon_edificio;
+
 	char caracter, fila, columna;
+	string tipo_edificio;
 	
-	while(archivo_ubicaciones >> nombre_edificio){
-		archivo_ubicaciones >> caracter; //Lee el paréntesis
+	while(archivo_ubicaciones >> tipo_edificio){
+		archivo_ubicaciones >> caracter;
 		archivo_ubicaciones >> fila;
-		archivo_ubicaciones >> caracter; //Lee la coma
+		archivo_ubicaciones >> caracter;
 		archivo_ubicaciones >> columna;
-		archivo_ubicaciones >> caracter; //Lee el paréntesis
-		
-		ubicacion= new Ubicacion;
-		ubicacion->nombre_edificio = nombre_edificio;
-		ubicacion->fila = fila - '0';
-		ubicacion->columna = columna - '0';
-		
-		//agregar_ubicacion(ubicacion);
+		archivo_ubicaciones >> caracter;
+
+
+		edificio  = new Edificio (fila - '0', columna - '0');
+
+		posicicon_edificio = identificar_edificio(edificio, tipo_edificio);
+
+		lista_edificios[posicicon_edificio] -> agregar_edificio_construido(edificio);
+
 	}
-	
 	archivo_ubicaciones.close();
 }
+
+
+
+int Proceso::identificar_edificio(Edificio* edificio, string tipo_edficio){
+
+	int posicion_edificio = 0;
+	while (lista_edificios[posicion_edificio] -> obtener_tipo() != tipo_edficio){
+
+		posicion_edificio++;
+	}
+	
+	return posicion_edificio;
+}
+
+
+void Proceso::cerrar_ubicaciones(){
+
+	ofstream archivo_ubicaciones(PATH_UBICACIONES);
+	Edificio* edificio = new Edificio;
+
+	for(int i = 0; i < cantidad_edificios; i++){
+		for(int j = 0; j < lista_edificios[i] -> obtener_cant_construidos(); j++){
+		
+			edificio = lista_edificios[i] -> obetener_edificios_construidos(j);
+
+			archivo_ubicaciones << this -> lista_edificios[i] -> obtener_tipo() << " ("
+								<< edificio -> obtener_fila() << ", "
+								<< edificio -> obtener_columna() << ')' << '\n';
+		}
+
+		lista_edificios[i] -> librerar_edificos_construidos();
+		delete lista_edificios[i];
+	}
+	delete [] lista_edificios;
+}
+
+
 
 
 
@@ -176,107 +320,7 @@ void Proceso::leer_mapa(){
 
 
 
-<<<<<<< HEAD
 
-=======
-//----------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-
-void Proceso::agregar_material(Material *nuevo_material){
-
-	Material **vector_materiales = new Material*[this->cantidad_materiales + 1];
-	if(vector_materiales == NULL)
-		delete[] vector_materiales;
-	
-	for(int i = 0; i < this->cantidad_materiales; i++)
-		vector_materiales[i] = this->material[i];
-		
-	vector_materiales[this->cantidad_materiales] = nuevo_material;
-	
-	if(this->cantidad_materiales != 0){
-		delete[] this->material;
-	}
-	
-	this->material = vector_materiales;
-	this->cantidad_materiales++;	
-
-}
-
-
-
-//----------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-
-void Proceso::agregar_ubicacion(Ubicacion *ubicacion){
-
-	Ubicacion **vector_ubicaciones = new Ubicacion*[this->cantidad_ubicaciones + 1];
-	if(vector_ubicaciones == NULL)
-		delete[] vector_ubicaciones;
-	
-	for(int i = 0; i < this->cantidad_ubicaciones; i++)
-		vector_ubicaciones[i] = this->ubicacion[i];
-		
-	vector_ubicaciones[this->cantidad_ubicaciones] = ubicacion;
-	
-	if(this->cantidad_ubicaciones != 0){
-		delete[] this->ubicacion;
-	}
-	
-	this->ubicacion = vector_ubicaciones;
-	this->cantidad_ubicaciones++;
-}
->>>>>>> refs/remotes/origin/main
-
-
-
-//----------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-
-
-void Proceso::cerrar_materiales(){
-
-	ofstream archivo_materiales(PATH_MATERIALES);
-	
-	for(int i = 0; i < this->cantidad_materiales; i++){
-		archivo_materiales << this->material[i].nombre_material << ' '
-						   << this->material[i].cantidad_material << '\n';
-		//delete this->material[i];
-	}
-	
-	delete[] this->material;
-	this->material = nullptr;
-}
-
-
-
-
-//----------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-
-void Proceso::cerrar_ubicaciones(){
-
-	ofstream archivo_ubicaciones(PATH_UBICACIONES);
-	
-	for(int i = 0; i < cantidad_ubicaciones; i++){
-		archivo_ubicaciones << this->ubicacion[i].nombre_edificio << " ("
-							<< this->ubicacion[i].fila << ", "
-							<< this->ubicacion[i].columna << ')' << '\n';
-	
-		//delete this->ubicacion[i];
-	}
-<<<<<<< HEAD
-	delete[] this->ubicacion;
-=======
-	delete [] ubicacion;
-}
-
-
-
-//----------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
@@ -290,40 +334,6 @@ void Proceso::cerrar_mapa(){
 }
 
 
-
-//----------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-
-void Proceso::listar_edificios(){
-
-	cout << endl << endl;
-	cout << "Lista de edificios:" << endl << endl;
-	cout << "            ════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════" << endl;
-	cout << "             Nombre\t\tPiedra\t\tMadera\t\tMetal\t\tCantidad construida\tCuantos más se pueden construir"<< endl;
-	cout << "            ════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════" << endl;
-	
-	long nombre_mas_largo = 0;
-	long nombre = 0;
-	for(int i = 0; i < this->cantidad_edificios; i++){
-		nombre = this->edificio[i].nombre_edificio.length();
-		if(nombre > nombre_mas_largo)
-			nombre_mas_largo = nombre;
-	}	
-	for(int i = 0; i < this->cantidad_edificios; i++){
-		long espacio = nombre_mas_largo - this->edificio[i].nombre_edificio.length();
-		cout << "             " << this->edificio[i].nombre_edificio;
-		cout << setw(12 + (int)espacio);
-		cout << this->edificio[i].cantidad_piedra << setw(16);
-		cout << this->edificio[i].cantidad_madera << setw(16);
-		cout << this->edificio[i].cantidad_metal << setw(23);
-		cout << this->edificio[i].cantidad_maxima_permitida /*- this->edificio[i]->cantidad_construidos*/ << endl;
-	}
-}
-
-
-
-//----------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
@@ -349,35 +359,6 @@ void Proceso::mostrar_mapa(){
 
 
 
-//----------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-
-void Proceso::mostrar_inventario(){
-
-	long nombre_mas_largo = 0;
-	long nombre = 0;
-
-	cout << endl << endl;
-	cout << "Lista de materiales propios:" << endl << endl;
-	
-	cout << "            ═══════════════════════════════" << endl;
-	cout << "             Materiales        Cantidades"<< endl;
-	cout << "            ═══════════════════════════════" << endl;
-	
-	for(int i = 0; i < this->cantidad_edificios; i++){
-		nombre = this->material[i]->nombre_material.length();
-		if(nombre > nombre_mas_largo)
-			nombre_mas_largo = nombre;
-	}
-	
-	for(int i = 0; i < this->cantidad_materiales; i++){
-		long espacio = nombre_mas_largo - this->material[i]->nombre_material.length();
-		cout << "              " << this->material[i]->nombre_material;
-		cout << setw(23 + (int)espacio);
-		cout << this->material[i]->cantidad_material <<endl;
-	}
-}
 
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -400,6 +381,5 @@ void Proceso::mostrar_menu(){
 	cout << "            ║ 9. LLuvia de recursos                 ║" << endl;
 	cout << "            ║ 10. Guardar y salir                   ║" << endl;
 	cout << "            ╚═══════════════════════════════════════╝" << endl << endl;
->>>>>>> refs/remotes/origin/main
 }
 

@@ -2,7 +2,10 @@
 #define ESCUELA_H
 
 #include "tipos_edificios.h"
+#include "edificio.h"
 
+
+const char CARACTER_ESCUELA = 'E';
 
 class Escuela: public Tipo_edificio {
 public:

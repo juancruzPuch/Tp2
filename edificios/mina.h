@@ -2,7 +2,10 @@
 #define MINA_H
 
 #include "tipos_edificios.h"
+#include "edificio.h"
 
+
+const char CARACTER_MINA = 'M';
 
 class Mina: public Tipo_edificio {
 public:

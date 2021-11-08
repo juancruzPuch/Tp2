@@ -2,7 +2,10 @@
 #define PLANTA_ELECTRICA_H
 
 #include "tipos_edificios.h"
+#include "edificio.h"
 
+
+const char CARACTER_PLANTA_ELECTRICA = 'P';
 
 class Planta_electrica: public Tipo_edificio {
 public:

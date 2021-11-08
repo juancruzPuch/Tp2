@@ -2,6 +2,8 @@
 #define PARSER_H
 
 #include "tipos_edificios.h"
+#include "edificio.h"
+
 
 
 class Parser {

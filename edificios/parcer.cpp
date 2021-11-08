@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "parcer.h"
+#include "edificio.h"
 #include "tipos_edificios.h"
 #include "aserradero.h"
 #include "escuela.h"
