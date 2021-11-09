@@ -186,7 +186,7 @@ void Proceso::cerrar_edificios(){
 	
 	delete[] this->lista_edificios;
 	this->lista_edificios = nullptr;
-}
+}*
 
 
 

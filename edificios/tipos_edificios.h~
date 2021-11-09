@@ -16,7 +16,7 @@ class Tipo_edificio {
 		int cant_max_construido;
 		char caracter;
 
-		int cantidad_construidos;
+		int cantidad_constuidos;
 		bool brinda_materiales;
 		Edificio** edificios_construidos;
 

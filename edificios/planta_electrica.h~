@@ -8,7 +8,6 @@
 const char CARACTER_PLANTA_ELECTRICA = 'P';
 
 class Planta_electrica: public Tipo_edificio {
-
 	public:
 	
 		//Precondiciones: -

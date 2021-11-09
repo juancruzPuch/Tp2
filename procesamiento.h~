@@ -5,7 +5,6 @@
 #include "edificios/edificio.h"
 #include "edificios/tipos_edificios.h"
 #include "edificios/edificio.h"
-#include "mapa.h"
 
 #include <iostream>
 
