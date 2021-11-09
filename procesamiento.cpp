@@ -1,6 +1,7 @@
+#include "materiales.h"
 #include "procesamiento.h"
 #include "edificios/tipos_edificios.h"
-#include "edificios/parcer.h"
+#include "edificios/parser.h"
 #include "edificios/edificio.h"
 #include "casilleros/casillero.h"
 #include "casilleros/casillero_construible.h"
@@ -27,8 +28,6 @@ Proceso::Proceso (){
 
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
-
-
 
 void Proceso::leer_materiales(){
 
@@ -123,8 +122,6 @@ void Proceso::mostrar_inventario(){
 
 
 
-
-
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -184,17 +181,6 @@ void Proceso::agregar_tipo_edificio(Tipo_edificio* tipo_edificio){
 
 
 
-void Proceso::cerrar_edificios(){
-	
-	for(int i = 0; i < this->cantidad_edificios; i++){
-		delete this->lista_edificios[i];
-	}
-	
-	delete[] this->lista_edificios;
-	this->lista_edificios = nullptr;
-}
-
-
 
 void Proceso::listar_edificios(){
 
@@ -206,7 +192,7 @@ void Proceso::listar_edificios(){
 	
 	long nombre_mas_largo = 0;
 	long nombre = 0;
-	for(int i = 0; i < this->cantidad_edificios; i++){
+	for(int i = 0; i < this -> cantidad_edificios; i++){
 		nombre = this -> lista_edificios[i] -> obtener_tipo().length();
 		if(nombre > nombre_mas_largo)
 			nombre_mas_largo = nombre;
@@ -223,7 +209,15 @@ void Proceso::listar_edificios(){
 }
 
 
-
+void Proceso::cerrar_edificios(){
+	
+	for(int i = 0; i < this->cantidad_edificios; i++){
+		delete this->lista_edificios[i];
+	}
+	
+	delete[] this->lista_edificios;
+	this->lista_edificios = nullptr;
+}
 
 
 
@@ -237,7 +231,9 @@ void Proceso::leer_ubicaciones(){
 	
 	int posicicon_edificio;
 
-	char caracter, fila, columna;
+	char caracter;
+	int fila = '0';
+	int columna = '0';
 	string tipo_edificio;
 	
 	while(archivo_ubicaciones >> tipo_edificio){
@@ -300,13 +296,18 @@ void Proceso::cerrar_ubicaciones(){
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
 void Proceso::leer_mapa(){
-
+	
 	fstream archivo_mapa(PATH_MAPA, ios::in);
 	Casillero* casillero;
+	
 
 	char filas, columnas, caracter;
-
+	archivo_mapa >> filas;
+	archivo_mapa >> columnas;
+	cout << filas - '0' << columnas - '0';
+	
 	mapa -> inicializar_mapa(filas - '0', columnas - '0');
+	
 	for(int i = 0; i < mapa -> obetener_cantidad_filas(); i++){
 		for(int j = 0; j < mapa -> obetener_cantidad_columnas(); j++){
 
@@ -316,82 +317,14 @@ void Proceso::leer_mapa(){
 		}
 	}
 	
-	archivo_mapa.close();
-}
-
-/*
-void Proceso::leer_mapa(){
-
-	fstream archivo_mapa(PATH_MAPA, ios::in);
-
-	char filas, columnas;
-	char casillero;
-
-	archivo_mapa >> filas;
-	archivo_mapa >> columnas;
-	this->mapa = new Mapa();
-	/*
-	//Creación de la matriz dinámica
-	mapa->mapa = new char * [filas - '0'];
-	
-	for(int i = 0; i < filas - '0'; i++)
-		mapa->mapa[i] = new char[columnas - '0'];
-	
-	mapa->cantidad_filas = filas - '0';
-	mapa->cantidad_columnas = columnas - '0';*/
-	
-	*mapa = Mapa(filas - '0', columnas - '0');
-	
-	//Asignación de valores a la matriz
-	for(int i = 0; i < mapa->obtener_filas(); i++){
-		for(int j = 0; j < mapa->obtener_columnas(); j++){
-			archivo_mapa >> casillero;
-			mapa->guardar_mapa(i, j, casillero);
-		}
-	}
-	
-	this->mapa = mapa;
 	
 	archivo_mapa.close();
 }
-*/
-
-
-
 
 
 
 void Proceso::cerrar_mapa(){
-	
-	for(int i = 0; i < this->mapa->obtener_filas(); i++){
-		delete[] this->mapa->obtener_mapa()[i];
-	}
-	delete[] mapa->obtener_mapa();
-	delete mapa;
-}
-
-
-
-
-
-void Proceso::mostrar_mapa(){
-	
-	for(int i = 0; i < mapa->obtener_filas(); i++){
-		for(int j = 0; j < mapa->obtener_columnas(); j++){
-			
-			if(mapa->obtener_mapa()[i][j] == 'L')
-				cout << BGND_LIGHT_BLUE_32 << "      " << END_COLOR;
-			
-			if(mapa->obtener_mapa()[i][j] == 'T')
-				cout << BGND_GREEN_34 << "      " << END_COLOR;
-			
-			if(mapa->obtener_mapa()[i][j] == 'C')
-				cout << BGND_GRAY_240 << "      " << END_COLOR;
-		}
-		cout << endl;
-	}
-	cout << endl;
-
+	mapa -> liberar_casilleros();
 }
 
 
@@ -420,8 +353,3 @@ void Proceso::mostrar_menu(){
 	cout << "            ╚═══════════════════════════════════════╝" << endl << endl;
 }
 
-void Proceso::guardar_y_salir(){
-	cerrar_materiales();
-	cerrar_ubicaciones();
-	cerrar_mapa();
-}

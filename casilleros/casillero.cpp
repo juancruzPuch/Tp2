@@ -7,12 +7,15 @@ Casillero::Casillero(int fila, int columna, char caracter){
     this -> columna = columna;
     this -> caracter = caracter;
 }
-char Casillero::establecer_caracter(){
+char Casillero::obtener_caracter(){
     return caracter;
 }
-int Casillero::establecer_fila(){
+int Casillero::obtener_fila(){
     return fila;
 }
-int Casillero::establecer_columna(){
+int Casillero::obtener_columna(){
     return columna;
+}
+std::string Casillero::obtener_caracter_color(){
+    return caracter_color;
 }

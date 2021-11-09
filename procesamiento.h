@@ -25,10 +25,6 @@
 
 using namespace std;
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 29b993475e8969b1d80cd39376e24f98152e0465
 class Proceso{
 
 	private:
@@ -75,9 +71,7 @@ class Proceso{
 		//Postcondiciones: Imprime todos los edificios y sus especificaciones
 		void listar_edificios();
 		
-		//Precondiciones: -
-		//Postcondicions: Muestra un dibujo del mapa 
-		void mostrar_mapa();
+
 		
 		//Precondiciones: -
 		//Postcondiciones: Imprime los materiales disponibles

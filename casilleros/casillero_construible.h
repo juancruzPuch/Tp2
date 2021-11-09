@@ -5,7 +5,7 @@
 
 class Casillero_construible: public Casillero{
 public:
-    Casillero_construible(int fila, int columna, int caracter);
+    Casillero_construible(int fila, int columna, char caracter);
 };
 
 

@@ -5,7 +5,7 @@
 
 class Casillero_transitable: public Casillero{
 public:
-    Casillero_transitable(int fila, int columna, int caracter);
+    Casillero_transitable(int fila, int columna, char caracter);
 };
 
 

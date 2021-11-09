@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #include <iostream>
 
 #include "mapa.h"
@@ -7,21 +6,31 @@
 #include "casilleros/casillero_inaccesible.h"
 #include "casilleros/casillero_transitable.h"
 
+using namespace std;
+
 const char TERRENO = 'T';
 const char LAGO = 'L';
 const char CAMINO = 'C';
 
+Mapa::Mapa(){
+	cantidad_filas = 0;
+	cantidad_columnas = 0;
+}
+
 void Mapa::inicializar_mapa(int cant_filas, int cant_columnas){
+	cantidad_columnas = 0;
+	cantidad_filas = 3;
+	
+    this -> cantidad_filas = cant_filas;
+    this -> cantidad_columnas = cant_columnas;
 
-
-    cantidad_filas = cant_filas;
-    cantidad_columnas = cant_columnas;
     casilleros = new Casillero**[cantidad_filas];
 
 	
 	for(int i = 0; i < cantidad_filas; i++){
         casilleros[i] = new Casillero* [cantidad_columnas];
     }
+	
 		
 }
 
@@ -49,35 +58,26 @@ Casillero* Mapa::identificar_casillero(int fila, int columna, char caracter){
 void Mapa::agregar_casillero(Casillero* casillero){
     casilleros[casillero -> obtener_fila()][casillero -> obtener_columna()] = casillero;
 }
-=======
-#include "mapa.h"
 
-Mapa::Mapa(){
-}
+void Mapa::mostrar_mapa(){
+    
+	for(int i = 0; i < cantidad_filas; i++){
+		for(int j = 0; j < cantidad_columnas; j++){
+			
+            cout << casilleros[i][j] -> obtener_caracter_color();
+		}
+		cout << endl;
+	}
+	cout << endl;
 
-Mapa::Mapa(int cantidad_filas, int cantidad_columnas){
-	this->cantidad_filas = cantidad_filas;
-	this->cantidad_columnas = cantidad_columnas;
-	
-	this->mapa = new char * [cantidad_filas];
-	
-	for(int i = 0; i < cantidad_filas; i++)
-		this->mapa[i] = new char[cantidad_columnas];
-	this->mapa = mapa;
 }
 
-void Mapa::guardar_mapa(int fila, int columna, char valor){
-	this->mapa[fila][columna] = valor;
+void Mapa::liberar_casilleros (){
+    for (int i = 0; i < cantidad_filas; i ++){
+        for (int j = 0; j < cantidad_columnas; j ++){
+            delete casilleros[i][j];
+        }
+        delete [] casilleros [i];
+    }
+    delete [] casilleros;
 }
-int Mapa::obtener_filas(){
-	return this->cantidad_filas;
-}
-
-int Mapa::obtener_columnas(){
-	return this->cantidad_columnas;
-}
-
-char** Mapa::obtener_mapa(){
-	return this->mapa;
-}
->>>>>>> 29b993475e8969b1d80cd39376e24f98152e0465

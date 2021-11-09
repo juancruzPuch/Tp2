@@ -8,13 +8,14 @@ protected:
     int fila;
     int columna;
     char caracter;
+    std::string caracter_color;
 public:
 
     Casillero(int fila, int columna, char caracter);
     char obtener_caracter();
     int obtener_fila();
     int  obtener_columna();
-    //virtual void mostrar() = 0;
+    std::string obtener_caracter_color();
 
 
     

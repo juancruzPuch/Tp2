@@ -5,7 +5,7 @@
 
 class Casillero_inaccesible: public Casillero{
 public:
-    Casillero_inaccesible(int fila, int columna, int caracter);
+    Casillero_inaccesible(int fila, int columna, char caracter);
 };
 
 
