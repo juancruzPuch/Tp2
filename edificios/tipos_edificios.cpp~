@@ -57,7 +57,7 @@ void Tipo_edificio::agregar_edificio_construido(Edificio* edificio){
 
     nuevo_edificios_construidos[cantidad_construidos] = edificio;
 
-    if (cantidad_construidos != 0){
+    if (cantidad_consttuidos != 0){
         delete [] edificios_construidos;
     }
 

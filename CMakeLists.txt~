@@ -3,7 +3,7 @@ project(andypolis)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(tp main.cpp materiales.h edificios.h ubicaciones.h ubicaciones.cpp procesamiento.h procesamiento.cpp edificios/aserradero.cpp edificios/fabrica.h edificios/mina.cpp edificios/mina.h edificios/obelisco.cpp edificios/obelisco.h edificios/parcer.cpp edificios/parcer.h edificios/planta_electrica.cpp edificios/planta_electrica.h edificios/tipos_edificios.cpp edificios/tipos_edificios.h
+add_executable(tp main.cpp materiales.h materiales.cpp edificios.h procesamiento.h procesamiento.cpp edificios/aserradero.cpp edificios/aserradero.h edificios/fabrica.h edificios/fabrica.cpp edificios/escuela.h edificios/escuela.cpp edificios/mina.cpp edificios/mina.h edificios/obelisco.cpp edificios/obelisco.h edificios/parcer.cpp edificios/parcer.h edificios/planta_electrica.cpp edificios/planta_electrica.h edificios/tipos_edificios.cpp edificios/tipos_edificios.h edificios/edificio.h edificios/edificio.cpp
 )
 
 add_compile_options(-Wall -Werror -pedantic -g)

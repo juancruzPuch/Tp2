@@ -14,11 +14,11 @@ class Material{
 	public:		
 		
 		//Precondiciones: -
-		//Postcondicions: Construye la memoria para un objeto material
+		//Postcondicions: construye la memoria para un objeto material
 		Material();
 		
 		//Precondiciones: -
-		//Postcondicions: Construye un objeto material
+		//Postcondicions: construye un objeto material
 		Material(string nombre_material, int cantidad_material);
 		
 		//Precondiciones: -

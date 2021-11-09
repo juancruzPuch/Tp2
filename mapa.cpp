@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include <iostream>
 
 #include "mapa.h"
@@ -48,3 +49,35 @@ Casillero* Mapa::identificar_casillero(int fila, int columna, char caracter){
 void Mapa::agregar_casillero(Casillero* casillero){
     casilleros[casillero -> obtener_fila()][casillero -> obtener_columna()] = casillero;
 }
+=======
+#include "mapa.h"
+
+Mapa::Mapa(){
+}
+
+Mapa::Mapa(int cantidad_filas, int cantidad_columnas){
+	this->cantidad_filas = cantidad_filas;
+	this->cantidad_columnas = cantidad_columnas;
+	
+	this->mapa = new char * [cantidad_filas];
+	
+	for(int i = 0; i < cantidad_filas; i++)
+		this->mapa[i] = new char[cantidad_columnas];
+	this->mapa = mapa;
+}
+
+void Mapa::guardar_mapa(int fila, int columna, char valor){
+	this->mapa[fila][columna] = valor;
+}
+int Mapa::obtener_filas(){
+	return this->cantidad_filas;
+}
+
+int Mapa::obtener_columnas(){
+	return this->cantidad_columnas;
+}
+
+char** Mapa::obtener_mapa(){
+	return this->mapa;
+}
+>>>>>>> 29b993475e8969b1d80cd39376e24f98152e0465
