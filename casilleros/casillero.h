@@ -5,10 +5,17 @@
 class Casillero {
 
 protected:
-    int x;
-    int y;
+    int fila;
+    int columna;
+    char caracter;
 public:
-    
+
+    Casillero(int fila, int columna, char caracter);
+    char obtener_caracter();
+    int obtener_fila();
+    int  obtener_columna();
+    //virtual void mostrar() = 0;
+
 
     
 };

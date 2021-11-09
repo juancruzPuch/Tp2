@@ -2,6 +2,7 @@
 #define PROCESAMIENTO_H
 
 #include "materiales.h"
+#include "mapa.h"
 #include "edificios/edificio.h"
 #include "edificios/tipos_edificios.h"
 #include "edificios/edificio.h"
@@ -23,19 +24,12 @@
 
 using namespace std;
 
-class Mapa{
-
-	public:
-		int cantidad_filas;
-		int cantidad_columnas;
-		char **mapa;
-};
 
 class Proceso{
 
 	private:
-		Material **material;
-		Mapa *mapa;
+		Material** material;
+		Mapa* mapa;
 		Tipo_edificio** lista_edificios;
 		int cantidad_materiales, cantidad_edificios, cantidad_ubicaciones;
 		
@@ -64,6 +58,7 @@ class Proceso{
 		//Precondiciones: -
 		//Postcondiciones: Guarda los datos del archivo de mapa
 		void leer_mapa();
+
 		
 		//Precondiciones: Se tiene que haber leído bien el archivo de materiales
 		//Postcondiciones: Agrega el material leído a la lista de materiales disponibles

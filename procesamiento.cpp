@@ -3,6 +3,12 @@
 #include "edificios/tipos_edificios.h"
 #include "edificios/parcer.h"
 #include "edificios/edificio.h"
+#include "casilleros/casillero.h"
+#include "casilleros/casillero_construible.h"
+#include "casilleros/casillero_inaccesible.h"
+#include "casilleros/casillero_transitable.h"
+
+
 
 #include <iostream>
 #include <string>
@@ -286,8 +292,27 @@ void Proceso::cerrar_ubicaciones(){
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
+void Proceso::leer_mapa(){
 
+	fstream archivo_mapa(PATH_MAPA, ios::in);
+	Casillero* casillero;
 
+	char filas, columnas, caracter;
+
+	mapa -> inicializar_mapa(filas - '0', columnas - '0');
+	for(int i = 0; i < mapa -> obetener_cantidad_filas(); i++){
+		for(int j = 0; j < mapa -> obetener_cantidad_columnas(); j++){
+
+			archivo_mapa >> caracter;
+			casillero = mapa -> identificar_casillero (i, j, caracter);
+			mapa -> agregar_casillero(casillero);
+		}
+	}
+	
+	archivo_mapa.close();
+}
+
+/*
 void Proceso::leer_mapa(){
 
 	fstream archivo_mapa(PATH_MAPA, ios::in);
@@ -317,7 +342,7 @@ void Proceso::leer_mapa(){
 	
 	archivo_mapa.close();
 }
-
+*/
 
 
 

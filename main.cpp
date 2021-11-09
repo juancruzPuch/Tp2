@@ -2,6 +2,7 @@
 #include "edificios/edificio.h"
 #include "procesamiento.h"
 #include "edificios/tipos_edificios.h"
+#include "casilleros/casillero.h"
 
 int main(){
 
