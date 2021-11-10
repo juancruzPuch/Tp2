@@ -18,26 +18,23 @@ Mapa::Mapa(){
 }
 
 void Mapa::inicializar_mapa(int cant_filas, int cant_columnas){
-	cantidad_columnas = 0;
-	cantidad_filas = 3;
 	
-    this -> cantidad_filas = cant_filas;
+	this -> cantidad_filas = cant_filas;
     this -> cantidad_columnas = cant_columnas;
-
-    casilleros = new Casillero**[cantidad_filas];
+	
+	casilleros = new Casillero**[cantidad_filas];
 
 	
 	for(int i = 0; i < cantidad_filas; i++){
         casilleros[i] = new Casillero* [cantidad_columnas];
     }
-	
-		
+    		
 }
 
-int Mapa::obetener_cantidad_filas(){
+int Mapa::obtener_cantidad_filas(){
     return cantidad_filas;
 }
-int Mapa::obetener_cantidad_columnas(){
+int Mapa::obtener_cantidad_columnas(){
     return cantidad_columnas;
 }
 
@@ -60,10 +57,9 @@ void Mapa::agregar_casillero(Casillero* casillero){
 }
 
 void Mapa::mostrar_mapa(){
-    
+
 	for(int i = 0; i < cantidad_filas; i++){
 		for(int j = 0; j < cantidad_columnas; j++){
-			
             cout << casilleros[i][j] -> obtener_caracter_color();
 		}
 		cout << endl;
@@ -73,6 +69,7 @@ void Mapa::mostrar_mapa(){
 }
 
 void Mapa::liberar_casilleros (){
+
     for (int i = 0; i < cantidad_filas; i ++){
         for (int j = 0; j < cantidad_columnas; j ++){
             delete casilleros[i][j];

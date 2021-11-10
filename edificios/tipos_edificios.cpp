@@ -3,7 +3,8 @@
 #include "tipos_edificios.h"
 #include "edificio.h"
 
-
+Tipo_edificio::Tipo_edificio(){
+}
 
 //Constructor
 Tipo_edificio::Tipo_edificio (int piedra, int madera, int metal, int cant_max_construido, std::string tipo_edificio){
@@ -40,11 +41,10 @@ Edificio* Tipo_edificio::obetener_edificios_construidos(int posisicion_edificio)
 }
 
 
-void Tipo_edificio::librerar_edificos_construidos(){
+void Tipo_edificio::liberar_edificos_construidos(){
     for (int i = 0; i < cantidad_construidos; i++){
         delete edificios_construidos[i];
     }
-    delete [] edificios_construidos;
 }
 
 void Tipo_edificio::agregar_edificio_construido(Edificio* edificio){

@@ -22,6 +22,8 @@ class Tipo_edificio {
 
 	public:
 		
+		Tipo_edificio();
+		
 		//Precondiciones: -
 		//Postcondicions: Construye un objeto tipo edificio
 		Tipo_edificio (int piedra, int madera, int metal, int cant_max_construido, std::string tipo_edificio);
@@ -60,7 +62,7 @@ class Tipo_edificio {
 		
 		//Precondiciones: -
 		//Postcondiciones: Libera la memoria utilizada por los edificios construidos
-		void librerar_edificos_construidos();
+		void liberar_edificos_construidos();
 		
 		
 		void mostrar();

@@ -1,36 +1,33 @@
 #ifndef MAPA_H
 #define MAPA_H
 
-using namespace std;
+#include "casilleros/casillero.h"
 
 class Mapa{
 
-	private:
-		int cantidad_filas;
-		int cantidad_columnas;
-		char **mapa;
-		
-	public:
-		
-		//Precondiciones: -
-		//Postcondicions: Construye la memoria para un objeto mapa
-		Mapa();
-		
-		//Precondiciones: -
-		//Postcondicions: Construye un objeto mapa
-		Mapa(int cantidad_filas, int cantidad_columnas, char **mapa);
-		
-		//Precondiciones: -
-		//Postcondicions: Devuelve la cantidad de filas
-		int obtener_filas();
-		
-		//Precondiciones: -
-		//Postcondicions: Devuelve la cantidad de columnas
-		int obtener_columnas();
-		
-		//Precondiciones: -
-		//Postcondicions: Devuelve el mapa
-		char **obtener_mapa();
+private:
+      int cantidad_filas;
+      int cantidad_columnas;
+      Casillero*** casilleros;
+public:
+      Mapa();
+      Mapa(int cant_filas, int cant_columnas);
+
+      int obtener_cantidad_filas ();
+      int obtener_cantidad_columnas ();
+
+
+
+      Casillero* identificar_casillero(int fila, int columna, char caracter);
+      void agregar_casillero(Casillero* casillero);
+
+      //Precondiciones: -
+      //Postcondicions: Muestra un dibujo del mapa 
+      void mostrar_mapa ();
+
+      void liberar_casilleros ();
 };
 
-#endif
+
+
+#endif //MAPA_H

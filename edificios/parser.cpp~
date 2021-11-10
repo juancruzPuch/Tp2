@@ -20,7 +20,7 @@ Tipo_edificio* Parser::procesar_entrada(){
     Tipo_edificio* tipo_edificio = new Tipo_edificio();
     
     if (this -> tipo_edificio() == "aserradero"){
-        tipo_edificio = new Aserradero (piedra(), madera(), metal(), cant_max_construido(), this -> tipo_edificio());
+        tipo_edificio = Aserradero (piedra(), madera(), metal(), cant_max_construido(), this -> tipo_edificio());
     }
     else if (this -> tipo_edificio() == "escuela"){
         tipo_edificio = new Escuela (piedra(), madera(), metal(), cant_max_construido(), this -> tipo_edificio());
