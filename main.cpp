@@ -10,13 +10,14 @@ int main(){
 	int opcion = 0;
 	
 	proceso.leer_archivos();
-
+	
+	proceso.demoler_edificio_coordenada();
 	//proceso.listar_edificios();
 	//proceso.listar_edificios_construidos();
 	//proceso.mostrar_mapa();
 	//proceso.construir_edificio("escuela");
 
-	
+	/*
 	proceso.mostrar_menu();
 	opcion = proceso.pedir_opcion();
 	
@@ -25,7 +26,7 @@ int main(){
 		
 		proceso.mostrar_menu();
 		opcion = proceso.pedir_opcion();
-	}
+	}*/
 		
 	proceso.guardar_y_salir();
 	

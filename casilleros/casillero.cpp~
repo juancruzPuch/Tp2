@@ -28,11 +28,12 @@ bool Casillero::es_construible(){
 bool Casillero::es_transitable(){
     return caracter == 'C';
 }
+std::string Casillero::obtener_tipo(){
 
+}
 void Casillero::establecer_tipo(std::string tipo){
 
 }
-
 int Casillero::obtener_cantidad_material(){
 
 }

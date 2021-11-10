@@ -20,7 +20,7 @@ int main(){
 	proceso.mostrar_menu();
 	opcion = proceso.pedir_opcion();
 	
-	while(opcion != 6){
+	while(opcion != 10){
 		proceso.procesar_opciones(opcion);
 		
 		proceso.mostrar_menu();

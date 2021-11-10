@@ -115,13 +115,9 @@ class Proceso{
 		//Precondiciones: -
 		//Postcondiciones: - (modificar)
 		void demoler_edificio_coordenada();
-
-<<<<<<< HEAD
 		
 		void modificar_materiales();
 
-=======
->>>>>>> f777925b106583524d16eb9ea15f47d111624d2d
 
 		//Precondiciones: -
 		//Postcondiciones: Imprime los materiales disponibles

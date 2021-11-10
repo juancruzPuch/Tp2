@@ -451,14 +451,13 @@ void Proceso::leer_ubicaciones(){
 		archivo_ubicaciones >> caracter;
 
 
-<<<<<<< HEAD
+
 		edificio  = new Edificio (fila , columna);
 		posicion_edificio = identificar_edificio(tipo_edificio);
-=======
+
 		edificio  = new Edificio (fila, columna);
 
-		posicion_edificio = identificar_edificio(edificio, tipo_edificio);
->>>>>>> f777925b106583524d16eb9ea15f47d111624d2d
+		posicion_edificio = identificar_edificio(tipo_edificio);
 
 		lista_edificios[posicion_edificio] -> agregar_edificio_construido(edificio);
 
@@ -616,7 +615,6 @@ int Proceso::pedir_opcion(){
 void Proceso::procesar_opciones(int opcion){
 	
 	string nombre_ingresado;
-	int coordenada;
 	
 	switch(opcion){
 		case 1:
@@ -634,9 +632,7 @@ void Proceso::procesar_opciones(int opcion){
 			break;
 		
 		case 4:
-			cout << "Ingrese el nombre del edificio que desea demoler: ";
-			cin >> coordenada;
-			//demoler_edificio(coordenada);
+			demoler_edificio_coordenada();
 			break;
 		
 		case 5:
@@ -678,8 +674,7 @@ void Proceso::guardar_y_salir(){
 
 
 
-<<<<<<< HEAD
-=======
+
 
 void Proceso::imprimir_mensaje_error(string nombre_edificio, string material, int cantidad, int cantidad_necesaria){
 	cout << "No hay suficiente " << material << "." << endl;
@@ -690,7 +685,6 @@ void Proceso::imprimir_mensaje_error(string nombre_edificio, string material, in
 
 
 
->>>>>>> f777925b106583524d16eb9ea15f47d111624d2d
 void Proceso::demoler_edificio_coordenada(){
 	int fila, columna;
 	mapa -> pedir_coordenada(fila, columna);
@@ -700,9 +694,4 @@ void Proceso::demoler_edificio_coordenada(){
 		mapa -> obtener_casillero(fila, columna) -> liberar ();
 
 	}
-
-<<<<<<< HEAD
-=======
-
->>>>>>> f777925b106583524d16eb9ea15f47d111624d2d
 }	
