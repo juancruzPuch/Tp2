@@ -451,9 +451,14 @@ void Proceso::leer_ubicaciones(){
 		archivo_ubicaciones >> caracter;
 
 
+<<<<<<< HEAD
+		edificio  = new Edificio (fila , columna);
+		posicion_edificio = identificar_edificio(tipo_edificio);
+=======
 		edificio  = new Edificio (fila, columna);
 
 		posicion_edificio = identificar_edificio(edificio, tipo_edificio);
+>>>>>>> f777925b106583524d16eb9ea15f47d111624d2d
 
 		lista_edificios[posicion_edificio] -> agregar_edificio_construido(edificio);
 
@@ -463,7 +468,7 @@ void Proceso::leer_ubicaciones(){
 
 
 
-int Proceso::identificar_edificio(Edificio* edificio, string tipo_edficio){
+int Proceso::identificar_edificio(string tipo_edficio){
 
 	int posicion_edificio = 0;
 	while (lista_edificios[posicion_edificio] -> obtener_tipo() != tipo_edficio){
@@ -483,7 +488,7 @@ void Proceso::cerrar_ubicaciones(){
 	for(int i = 0; i < cantidad_edificios; i++){
 		for(int j = 0; j < lista_edificios[i] -> obtener_cant_construidos(); j++){
 			
-
+			cout << lista_edificios[i] -> obetener_edificios_construidos(j) -> obtener_fila() << " - " << lista_edificios[i] -> obetener_edificios_construidos(j) -> obtener_columna() << endl;
 			archivo_ubicaciones << this -> lista_edificios[i] -> obtener_tipo() << " ("
 								<< lista_edificios[i] -> obetener_edificios_construidos(j) -> obtener_fila() << ", "
 								<< lista_edificios[i] -> obetener_edificios_construidos(j) -> obtener_columna() << ')' << '\n';
@@ -673,6 +678,8 @@ void Proceso::guardar_y_salir(){
 
 
 
+<<<<<<< HEAD
+=======
 
 void Proceso::imprimir_mensaje_error(string nombre_edificio, string material, int cantidad, int cantidad_necesaria){
 	cout << "No hay suficiente " << material << "." << endl;
@@ -682,13 +689,20 @@ void Proceso::imprimir_mensaje_error(string nombre_edificio, string material, in
 
 
 
-/*
+
+>>>>>>> f777925b106583524d16eb9ea15f47d111624d2d
 void Proceso::demoler_edificio_coordenada(){
 	int fila, columna;
-	cout << "Ingrese la fila: " << endl;
-	fila = mapa -> pedir_coordenada(mapa -> obtener_cantidad_filas());
-	cout << "Ingrese la columna: " << endl;
-	columna = mapa -> pedir_coordenada(mapa -> obtener_cantidad_columnas());
+	mapa -> pedir_coordenada(fila, columna);
+	int posicion;
+	if (mapa -> se_puede_demoler(fila, columna)){
+		posicion = identificar_edificio(mapa -> obtener_casillero(fila, columna) -> obtener_tipo());
+		mapa -> obtener_casillero(fila, columna) -> liberar ();
 
+	}
 
-}	*/
+<<<<<<< HEAD
+=======
+
+>>>>>>> f777925b106583524d16eb9ea15f47d111624d2d
+}	

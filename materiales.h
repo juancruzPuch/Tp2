@@ -37,6 +37,10 @@ class Material{
 		//Postcondicions: Agrega material
 		void agregar_cantidad(int recurso_agregado);
 
+		void establecer_nombre_material (string nombre);
+
+		void establecer_cantidad (int cantidad);
+
 };
 
 #endif

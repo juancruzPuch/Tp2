@@ -81,7 +81,7 @@ class Proceso{
 		
 		//Precondiciones: Se tiene que haber leído bien el archivo de ubicaciones //(modificar)
 		//Postcondiciones: Agrega la ubicación leída a la lista de ubicaciones
-		int identificar_edificio(Edificio *edificio, string tipo_edficio);
+		int identificar_edificio(string tipo_edficio);
 		
 		//Precondiciones: -
 		//Postcondiciones: Imprime los edificios construidos
@@ -116,6 +116,12 @@ class Proceso{
 		//Postcondiciones: - (modificar)
 		void demoler_edificio_coordenada();
 
+<<<<<<< HEAD
+		
+		void modificar_materiales();
+
+=======
+>>>>>>> f777925b106583524d16eb9ea15f47d111624d2d
 
 		//Precondiciones: -
 		//Postcondiciones: Imprime los materiales disponibles
