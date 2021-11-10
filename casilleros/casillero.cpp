@@ -16,7 +16,7 @@ int Casillero::obtener_fila(){
 int Casillero::obtener_columna(){
     return columna;
 }
-std::string Casillero::obtener_tipo(){
+std::string Casillero::obtener_tipo_casillero(){
     return tipo;
 }
 std::string Casillero::obtener_caracter_color(){
@@ -27,19 +27,4 @@ bool Casillero::es_construible(){
 }
 bool Casillero::es_transitable(){
     return caracter == 'C';
-}
-std::string Casillero::obtener_tipo(){
-
-}
-void Casillero::establecer_tipo(std::string tipo){
-
-}
-int Casillero::obtener_cantidad_material(){
-
-}
-void Casillero::establecer_cantidad_material(int cantidad){
-
-}
-void Casillero::liberar(){
-
 }

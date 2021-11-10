@@ -101,12 +101,10 @@ class Proceso{
 		//Postcondiciones: - (modificar)
 		void demoler_edificio_coordenada();
 
-<<<<<<< HEAD
-		
-		void modificar_materiales();
+		int identificar_material(string nombre_material);
 
-=======
->>>>>>> f777925b106583524d16eb9ea15f47d111624d2d
+		void aumentar_materiales_derrumbe(Tipo_edificio* tipo_edificio);
+
 
 		//Precondiciones: -
 		//Postcondiciones: Imprime los materiales disponibles

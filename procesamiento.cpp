@@ -19,6 +19,7 @@
 
 const int CANT_CARACTERISTICAS_EDIFICIOS = 5;
 
+using namespace std;
 
 Proceso::Proceso (){
 	cantidad_edificios = 0;
@@ -89,8 +90,6 @@ void Proceso::cerrar_materiales(){
 	this->material = nullptr;
 }
 
-
-
 bool Proceso::verificar_materiales(string nombre_ingresado, int piedra_necesaria, int madera_necesaria, int metal_necesario, int construidos, int cantidad_max){
 
 	int errores = 0;
@@ -122,8 +121,6 @@ bool Proceso::verificar_materiales(string nombre_ingresado, int piedra_necesaria
 	
 	return true;
 }
-
-
 
 
 void Proceso::mostrar_inventario(){
@@ -191,32 +188,6 @@ void Proceso::leer_opciones_edificios(){
 	archivo_edificios.close();
 }
 
-
-
-
-void Proceso::agregar_tipo_edificio(Tipo_edificio* tipo_edificio){
-
-    Tipo_edificio** nueva_lista_edificios = new Tipo_edificio*[(this -> cantidad_edificios) + 1];
-    
-    
-    for (int i = 0; i < (this -> cantidad_edificios); i++){
-        nueva_lista_edificios[i] = this->lista_edificios[i];
-    }
-    
- 
-    nueva_lista_edificios[this -> cantidad_edificios] = tipo_edificio;
-
-    if (cantidad_edificios != 0){
-        delete [] lista_edificios;
-    } 
-    
-    this -> lista_edificios = nueva_lista_edificios;
-    this -> cantidad_edificios++;
-	
-}
-
-
-
 bool Proceso::verificar_edificio(string nombre_ingresado, int *piedra_necesaria, int *madera_necesaria, int *metal_necesario, int *construidos, int *cantidad_max){
 
 	int existe = 0;
@@ -282,6 +253,33 @@ void Proceso::listar_edificios_construidos(){
 
 }
 
+
+
+void Proceso::agregar_tipo_edificio(Tipo_edificio* tipo_edificio){
+
+    Tipo_edificio** nueva_lista_edificios = new Tipo_edificio*[(this -> cantidad_edificios) + 1];
+    
+    
+    for (int i = 0; i < (this -> cantidad_edificios); i++){
+        nueva_lista_edificios[i] = this->lista_edificios[i];
+    }
+    
+ 
+    nueva_lista_edificios[this -> cantidad_edificios] = tipo_edificio;
+
+    if (cantidad_edificios != 0){
+        delete [] lista_edificios;
+    } 
+    
+    this -> lista_edificios = nueva_lista_edificios;
+    this -> cantidad_edificios++;
+	
+}
+
+
+
+
+
 void Proceso::listar_edificios(){
 
 	cout << endl << endl;
@@ -303,15 +301,9 @@ void Proceso::listar_edificios(){
 		cout << setw(5 + (int)espacio);
 		cout << this -> lista_edificios[i] -> obtener_piedra() << setw(16);
 		cout << this -> lista_edificios[i] -> obtener_madera() << setw(16);
-		cout << this -> lista_edificios[i] -> obtener_metal() << setw(18);
-		cout << this -> lista_edificios[i] -> obtener_cant_construidos() << setw(22);
-		cout << this -> lista_edificios[i] -> obtener_cant_max_construido() - this -> lista_edificios[i] -> obtener_cant_construidos() << setw(29);
-		if(this -> lista_edificios[i] -> brinda_material())
-			cout << " Sí"  << endl;
-		else
-			cout << "No" << endl;
+		cout << this -> lista_edificios[i] -> obtener_metal() << setw(23);
+		cout << this -> lista_edificios[i] -> obtener_cant_max_construido() - this -> lista_edificios[i] -> obtener_cant_construidos() << endl;
 	}
-	cout << endl << endl;
 }
 
 
@@ -378,7 +370,6 @@ bool Proceso::construir_edificio(string nombre_ingresado){
 }
 
 
-
 void Proceso::cerrar_edificios(){
 	
 	for(int i = 0; i < this->cantidad_edificios; i++){
@@ -403,8 +394,8 @@ void Proceso::leer_ubicaciones(){
 	int posicion_edificio;
 
 	char caracter;
-	int fila;
-	int columna;
+	int fila = '0';
+	int columna = '0';
 	string tipo_edificio;
 	
 	while(archivo_ubicaciones >> tipo_edificio){
@@ -415,14 +406,8 @@ void Proceso::leer_ubicaciones(){
 		archivo_ubicaciones >> caracter;
 
 
-<<<<<<< HEAD
 		edificio  = new Edificio (fila , columna);
 		posicion_edificio = identificar_edificio(tipo_edificio);
-=======
-		edificio  = new Edificio (fila, columna);
-
-		posicion_edificio = identificar_edificio(edificio, tipo_edificio);
->>>>>>> f777925b106583524d16eb9ea15f47d111624d2d
 
 		lista_edificios[posicion_edificio] -> agregar_edificio_construido(edificio);
 
@@ -492,6 +477,7 @@ void Proceso::leer_mapa(){
 	this->mapa = mapa;
 	archivo_mapa.close();
 }
+
 
 
 
@@ -589,8 +575,7 @@ void procesar_opciones(int opcion){
 			break;
 		
 		case 4:
-			cout << "Ingrese el nombre del edificio que desea demoler: ";
-			cin >> coordenada;
+
 			//demoler_edificio(coordenada);
 			break;
 		
@@ -629,8 +614,6 @@ void Proceso::guardar_y_salir(){
 
 
 
-<<<<<<< HEAD
-=======
 
 void Proceso::imprimir_mensaje_error(string nombre_edificio, string material, int cantidad, int cantidad_necesaria){
 	cout << "No hay suficiente " << material << "." << endl;
@@ -640,20 +623,79 @@ void Proceso::imprimir_mensaje_error(string nombre_edificio, string material, in
 
 
 
+void Proceso::mostrar_mapa(){
+	mapa->mostrar_mapa();
+}
 
->>>>>>> f777925b106583524d16eb9ea15f47d111624d2d
+void Proceso::cerrar_mapa(){
+	mapa -> liberar_casilleros();
+	delete mapa;
+}
+
+
+
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+void Proceso::mostrar_menu(){
+	cout << endl << endl;
+	cout << TXT_ITALIC << TXT_LIGHT_AQUA_123 << "\t            ¡BIENVENIDOS A ANDYPOLIS!" << END_COLOR << endl << endl;
+	cout << "                        " << TXT_UNDERLINE << "Menú de opciones" << END_COLOR << endl << endl;
+	cout << "            ╔═══════════════════════════════════════╗" << endl;
+	cout << "            ║ 1. Construir edificio por nombre      ║" << endl;
+	cout << "            ║ 2. Listar los edificios construidos   ║" << endl;
+	cout << "            ║ 3. Listar todos los edificios         ║" << endl;
+	cout << "            ║ 4. Demoler un edificio por coordenada ║" << endl;
+	cout << "            ║ 5. Mostrar mapa                       ║" << endl;
+	cout << "            ║ 6. Consultar coordenada               ║" << endl;
+	cout << "            ║ 7. Mostrar inventario                 ║" << endl;
+	cout << "            ║ 8. Recolectar recursos producidos     ║" << endl;
+	cout << "            ║ 9. LLuvia de recursos                 ║" << endl;
+	cout << "            ║ 10. Guardar y salir                   ║" << endl;
+	cout << "            ╚═══════════════════════════════════════╝" << endl << endl;
+}
+
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------
+
+int Proceso::identificar_material(string nombre_material){
+	int posicion_material = 0;
+	while (material[posicion_material] -> obtener_nombre_material() != nombre_material){
+		posicion_material ++;
+	}
+	return posicion_material;
+}
+
+void Proceso::aumentar_materiales_derrumbe(Tipo_edificio* tipo_edificio){
+	for (int i = 0; i < cantidad_materiales; i++){
+		if (material[i] -> obtener_nombre_material() == "piedra"){
+			material[i] -> establecer_cantidad(material[i] -> obtener_cantidad_material() + tipo_edificio -> obtener_piedra());
+		}
+		else if (material[i] -> obtener_nombre_material() == "madera"){
+			material[i] -> establecer_cantidad(material[i] -> obtener_cantidad_material() + tipo_edificio -> obtener_madera());
+		}
+		else if (material[i] -> obtener_nombre_material() == "metal"){
+			material[i] -> establecer_cantidad(material[i] -> obtener_cantidad_material() + tipo_edificio -> obtener_metal());
+		}
+	}
+}
+
+
 void Proceso::demoler_edificio_coordenada(){
 	int fila, columna;
 	mapa -> pedir_coordenada(fila, columna);
 	int posicion;
 	if (mapa -> se_puede_demoler(fila, columna)){
+
 		posicion = identificar_edificio(mapa -> obtener_casillero(fila, columna) -> obtener_tipo());
+
 		mapa -> obtener_casillero(fila, columna) -> liberar ();
+		aumentar_materiales_derrumbe(lista_edificios[posicion]);
 
 	}
 
-<<<<<<< HEAD
-=======
-
->>>>>>> f777925b106583524d16eb9ea15f47d111624d2d
 }	

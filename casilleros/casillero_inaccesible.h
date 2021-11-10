@@ -4,15 +4,13 @@
 #include "casillero.h"
 
 class Casillero_inaccesible: public Casillero{
-<<<<<<< HEAD
 public:
     Casillero_inaccesible(int fila, int columna, char caracter);
-    std::string obtener_tipo();
+   std::string obtener_tipo();
+    void establecer_tipo(std::string tipo);
     int obtener_cantidad_material();
-=======
-	public:
-		Casillero_inaccesible(int fila, int columna, char caracter);
->>>>>>> f777925b106583524d16eb9ea15f47d111624d2d
+    void establecer_cantidad_material(int cantidad);
+    void liberar();
 };
 
 

@@ -14,18 +14,14 @@ Casillero(fila, columna, caracter){
 }
 
 std::string Casillero_construible::obtener_tipo(){
-    Casillero::obtener_tipo();
     return tipo_edificio;
 }
 void Casillero_construible::establecer_tipo(std::string nombre_tipo){
-    Casillero::establecer_tipo(nombre_tipo);
     establecer_tipo(nombre_tipo);
 }
 int Casillero_construible::obtener_cantidad_material(){
-    Casillero::obtener_cantidad_material();
     return -1;
 }
 void Casillero_construible::liberar(){
-    Casillero::liberar();
     tipo_edificio = "-1";
 }
