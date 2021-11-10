@@ -18,3 +18,7 @@ int Material::obtener_cantidad_material(){
 void Material::modificar_cantidad(int cantidad_usada){
 	this->cantidad_material -= cantidad_usada;
 }
+
+void Material::agregar_cantidad(int recurso_agregado){
+	this->cantidad_material += recurso_agregado;
+}

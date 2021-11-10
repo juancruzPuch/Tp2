@@ -39,7 +39,7 @@ int Mapa::obtener_cantidad_columnas(){
 }
 
 Casillero* Mapa::tipo_casillero(int fila, int columna){
-	return casillero[fila][columna];
+	return casilleros[fila][columna];
 }
 
 Casillero* Mapa::identificar_casillero(int fila, int columna, char caracter){

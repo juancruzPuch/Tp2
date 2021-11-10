@@ -72,17 +72,6 @@ void Mapa::mostrar_mapa(){
 
 }
 
-char** Mapa::obtener_mapa(){
-	char **mapa = new char*[cantidad_filas];
-	for(int i = 0; i < cantidad_filas; i++)
-		mapa[i] = new char[cantidad_columnas];
-		
-	for(int i = 0; i < cantidad_filas; i++){
-		for(int j = 0; j < cantidad_columnas; j++)
-			mapa[i][j] = casilleros[i][j]->obtener_caracter();
-	}
-	return mapa;
-}
 
 int Mapa::pedir_coordenada(int limite){
 	int coordenada;

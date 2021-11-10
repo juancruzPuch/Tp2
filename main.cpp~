@@ -7,20 +7,27 @@
 int main(){
 	
 	Proceso proceso;
+	int opcion = 0;
 	
-	proceso.leer_opciones_edificios();
-	proceso.leer_materiales();
-	proceso.leer_ubicaciones();
-	proceso.leer_mapa();
+	proceso.leer_archivos();
 
 	//proceso.listar_edificios();
 	//proceso.listar_edificios_construidos();
 	//proceso.mostrar_mapa();
-	proceso.construir_edificio();
+	//proceso.construir_edificio("escuela");
+
+	
+	proceso.mostrar_menu();
+	opcion = proceso.pedir_opcion();
+	
+	while(opcion != 6){
+		proceso.procesar_opciones(opcion);
 		
-	proceso.cerrar_materiales();
-	proceso.cerrar_ubicaciones();
-	proceso.cerrar_mapa();
+		proceso.mostrar_menu();
+		opcion = proceso.pedir_opcion();
+	}
+		
+	proceso.guardar_y_salir();
 	
 
 	cout << "todo ok" << endl;
