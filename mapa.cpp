@@ -68,6 +68,18 @@ void Mapa::mostrar_mapa(){
 
 }
 
+int Mapa::pedir_coordenada(int limite){
+	int coordenada;
+	std::cin >> coordenada;
+	while (coordenada > limite || coordenada < 0){
+		cout << "Coordenada invalida." << endl;
+		cout << "Ingrese la coordenada nuevamente (" << limite << " -  0)" << endl;
+		cin >> coordenada;
+	}
+	return coordenada;
+}
+
+
 void Mapa::liberar_casilleros (){
 
     for (int i = 0; i < cantidad_filas; i ++){

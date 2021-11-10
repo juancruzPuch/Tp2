@@ -71,9 +71,19 @@ class Proceso{
 		//Precondiciones: -
 		//Postcondiciones: Imprime todos los edificios y sus especificaciones
 		void listar_edificios();
-		
+
+
+
+
+
+		//Precondiciones: -
+		//Postcondiciones: - (modificar)
+		void demoler_edificio_coordenada();
 
 		
+
+
+
 		//Precondiciones: -
 		//Postcondiciones: Imprime los materiales disponibles
 		void mostrar_inventario();

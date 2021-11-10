@@ -25,6 +25,12 @@ public:
       //Postcondicions: Muestra un dibujo del mapa 
       void mostrar_mapa ();
 
+      //Precondiciones: un numero mayor a 0
+      //Postcondicions: devuelve un numero entre el limite y 0
+      int pedir_coordenada (int limite);
+
+
+
       void liberar_casilleros ();
 };
 

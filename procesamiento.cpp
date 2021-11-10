@@ -133,6 +133,7 @@ void Proceso::leer_opciones_edificios(){
 	
 	fstream archivo_edificios(PATH_EDIFICIOS, ios::in);
 
+	
 	Tipo_edificio* tipo_edificio;
     std::string lectura_edificios[CANT_CARACTERISTICAS_EDIFICIOS];
 
@@ -355,3 +356,16 @@ void Proceso::mostrar_menu(){
 	cout << "            ╚═══════════════════════════════════════╝" << endl << endl;
 }
 
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------
+
+void Proceso::demoler_edificio_coordenada(){
+	int fila, columna;
+	cout << "Ingrese la fila: " << endl;
+	fila = mapa -> pedir_coordenada(mapa -> obtener_cantidad_filas());
+	cout << "Ingrese la columna: " << endl;
+	columna = mapa -> pedir_coordenada(mapa -> obtener_cantidad_columnas());
+
+	
+}	

@@ -1,11 +1,4 @@
-<<<<<<< HEAD
-fabrica (-46, -43)
-mina (-43, -43)
-mina (-43, -43)
-planta_electrica (7, -43)
-=======
-fabrica (-1870, -1867)
-mina (-1867, -1867)
-mina (-1867, -1867)
-planta_electrica (-1817, -1867)
->>>>>>> f6b9fbad88873562ec0482606135fbd38f4b7ab1
+fabrica (-47, -46)
+mina (-45, -44)
+mina (-43, -42)
+planta_electrica (-41, -40)

@@ -16,6 +16,8 @@ public:
     int obtener_fila();
     int  obtener_columna();
     std::string obtener_caracter_color();
+    bool es_construible();
+    bool es_transitable();
 
 
     

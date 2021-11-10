@@ -7,10 +7,11 @@
 
 
 class Parser {
+	private:
+		std::string *lectura_archivo;
 
 	public:
 		
-		std::string lectura_archivo[5];
 		
 		//Precondiciones: -
 		//Postcondicions: Devuelve una línea del archivo "edificios" y la guarda en lectura_archivos[]

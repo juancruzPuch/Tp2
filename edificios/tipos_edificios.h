@@ -21,7 +21,7 @@ class Tipo_edificio {
 		Edificio** edificios_construidos;
 
 	public:
-		
+		~Tipo_edificio();
 		Tipo_edificio();
 		
 		//Precondiciones: -
@@ -59,6 +59,8 @@ class Tipo_edificio {
 		//Precondiciones: -
 		//Postcondiciones: Agrega el edificio leído a la lista de edificios construidos
 		void agregar_edificio_construido(Edificio* edificio);
+
+		void derribar_edificio_construido(int fila, int columna);
 		
 		//Precondiciones: -
 		//Postcondiciones: Libera la memoria utilizada por los edificios construidos

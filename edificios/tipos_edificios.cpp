@@ -3,7 +3,12 @@
 #include "tipos_edificios.h"
 #include "edificio.h"
 
+using namespace std;
+
 Tipo_edificio::Tipo_edificio(){
+}
+Tipo_edificio::~Tipo_edificio(){
+    cout<< "se destruyo un tipo edificio" << endl;
 }
 
 //Constructor
@@ -14,6 +19,7 @@ Tipo_edificio::Tipo_edificio (int piedra, int madera, int metal, int cant_max_co
     cant_metal = metal;
     this -> cant_max_construido = cant_max_construido;
     cantidad_construidos = 0;
+
 }
 
 
@@ -42,8 +48,11 @@ Edificio* Tipo_edificio::obetener_edificios_construidos(int posisicion_edificio)
 
 
 void Tipo_edificio::liberar_edificos_construidos(){
-    for (int i = 0; i < cantidad_construidos; i++){
-        delete edificios_construidos[i];
+    if (cantidad_construidos > 0){
+        for (int i = 0; i < cantidad_construidos; i++){
+            delete edificios_construidos[i];
+        }
+        delete [] edificios_construidos;
     }
 }
 
@@ -61,6 +70,36 @@ void Tipo_edificio::agregar_edificio_construido(Edificio* edificio){
         delete [] edificios_construidos;
     }
 
-    edificios_construidos = nuevo_edificios_construidos;
-    cantidad_construidos++;
+    this -> edificios_construidos = nuevo_edificios_construidos;
+    this -> cantidad_construidos++;
+}
+
+void Tipo_edificio::derribar_edificio_construido(int fila, int columna){
+    if (cantidad_construidos > 1){
+        Edificio** nuevo_edificios_construidos = new Edificio* [cantidad_construidos - 1];
+
+        int posicion = 0;
+        while (fila != edificios_construidos[posicion] -> obtener_fila() && columna != edificios_construidos[posicion] -> obtener_columna()){
+            posicion++;
+        }
+        Edificio* aux = edificios_construidos[posicion];
+        edificios_construidos[posicion] = edificios_construidos[cantidad_construidos];
+        edificios_construidos[cantidad_construidos] = aux;
+
+        for (int i = 0; i < (cantidad_construidos - 1); i++){
+            nuevo_edificios_construidos[i] = edificios_construidos [i];
+        }
+        delete edificios_construidos [cantidad_construidos - 1];
+        delete [] edificios_construidos;
+
+        edificios_construidos = nuevo_edificios_construidos;
+    }
+    else {
+        delete edificios_construidos [cantidad_construidos - 1];
+        delete [] edificios_construidos;
+    
+    }
+    cantidad_construidos--;
+
+
 }

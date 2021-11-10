@@ -19,3 +19,9 @@ int Casillero::obtener_columna(){
 std::string Casillero::obtener_caracter_color(){
     return caracter_color;
 }
+bool Casillero::es_construible(){
+   return caracter == 'T';
+}
+bool Casillero::es_transitable(){
+    return caracter == 'C';
+}

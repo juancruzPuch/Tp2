@@ -11,9 +11,7 @@
 #include "planta_electrica.h"
 
 Parser::Parser (std::string* lectura){
-    for (int i = 0; i < 5; i++ ){
-        lectura_archivo[i] = lectura[i];
-    }
+    lectura_archivo = lectura;
 }
 
 Tipo_edificio* Parser::procesar_entrada(){
