@@ -38,6 +38,10 @@ int Mapa::obtener_cantidad_columnas(){
     return cantidad_columnas;
 }
 
+Casillero* Mapa::tipo_casillero(int fila, int columna){
+	return casilleros[fila][columna];
+}
+
 Casillero* Mapa::identificar_casillero(int fila, int columna, char caracter){
 	Casillero* casillero;
 	if (caracter == 'L'){
@@ -68,6 +72,7 @@ void Mapa::mostrar_mapa(){
 
 }
 
+<<<<<<< HEAD
 
 Casillero* Mapa::obtener_casillero(int fila, int columna){
 	return casilleros[fila][columna];
@@ -98,6 +103,24 @@ void Mapa::pedir_coordenada(int &fila, int &columna){
 	std::cin >> fila;
 	std::cin >> columna;
 	while (fila > cantidad_filas || fila < 0 || columna > cantidad_columnas || columna < 0){
+=======
+char** Mapa::obtener_mapa(){
+	char **mapa = new char*[cantidad_filas];
+	for(int i = 0; i < cantidad_filas; i++)
+		mapa[i] = new char[cantidad_columnas];
+		
+	for(int i = 0; i < cantidad_filas; i++){
+		for(int j = 0; j < cantidad_columnas; j++)
+			mapa[i][j] = casilleros[i][j]->obtener_caracter();
+	}
+	return mapa;
+}
+
+int Mapa::pedir_coordenada(int limite){
+	int coordenada;
+	std::cin >> coordenada;
+	while (coordenada > limite || coordenada < 0){
+>>>>>>> f777925b106583524d16eb9ea15f47d111624d2d
 		cout << "Coordenada invalida." << endl;
 		cout << "Ingrese la coordenada nuevamente -> fil (" << cantidad_filas << " - 0)" << endl;
 		cout << "                                 -> col (" << cantidad_columnas << " - 0)" << endl;

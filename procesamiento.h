@@ -69,20 +69,44 @@ class Proceso{
 		int identificar_edificio(string tipo_edficio);
 		
 		//Precondiciones: -
+		//Postcondiciones: Imprime los edificios construidos
+		void listar_edificios_construidos();
+		
+		//Precondiciones: -
 		//Postcondiciones: Imprime todos los edificios y sus especificaciones
 		void listar_edificios();
 
-
-
+		//Precondiciones: -
+		//Postcondiciones: Verifica que exista el edificio ingresado y, si existe, guarda los datos del edificio en las variables ingresadas
+		bool verificar_edificio(string nombre_ingresado, int *piedra_necesaria, int *madera_necesaria, int *metal_necesario, int *construidos, int *cantidad_max);
+		
+		//Precondiciones: -
+		//Postcondiciones: Verifica que haya la suficiente cantidad de materiales para construir un edificio especifico
+		bool verificar_materiales(string nombre_ingresado, int piedra_necesaria, int madera_necesaria, int metal_necesario, int construidos, int cantidad_max);
+		
+		//Precondiciones: -
+		//Postcondiciones: Verifica que haya las coordenadas ingresadas estén disponibles para construir
+		bool verificar_coordenadas(int fila, int columna);
+		
+		//Precondiciones: -
+		//Postcondiciones: Imprime un mensaje de error si algún material es insuficiente
+		void imprimir_mensaje_error(string nombre_edificio, string material, int cantidad, int cantidad_necesaria);
+		
+		//Precondiciones: Se debe verificar que haya suficientes materiales, que el edificio ingresado exista, y que las coordenadas estén disponibles
+		//Postcondiciones: Pregunta al usuario si de verdad quiere construir y, si afirma, construye el edificio ingresado y modifica la lista de materiales y edificios
+		bool construir_edificio(string nombre_ingresado);
 
 
 		//Precondiciones: -
 		//Postcondiciones: - (modificar)
 		void demoler_edificio_coordenada();
 
+<<<<<<< HEAD
 		
 		void modificar_materiales();
 
+=======
+>>>>>>> f777925b106583524d16eb9ea15f47d111624d2d
 
 		//Precondiciones: -
 		//Postcondiciones: Imprime los materiales disponibles
@@ -107,6 +131,14 @@ class Proceso{
 		//Precondiciones: -
 		//Postcondiciones: Imprime el menu de opciones
 		void mostrar_menu();
+		
+		//Precondiciones: -
+		//Postcondiciones: Pide al usuario que ingrese una opcion y verifica que sea válida
+		int pedir_opcion();
+
+		//Precondiciones: La opcion ingresada debe ser válida
+		//Postcondiciones: Procesa la opcion ingresada por el usuario
+		void procesar_opciones(int opcion);
 
 		//Precondiciones: -
 		//Postcondiciones: Guarda los edificios en el archivo "edificios" y elimina la lista. Guarda los materiales en el archivo "materiales" y elimina la lista. Guarda las ubicaciones en el archivo "ubicaciones" y elimina la lista. Libera la memoria utilizada para el mapa

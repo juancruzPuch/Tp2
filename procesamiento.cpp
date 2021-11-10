@@ -91,6 +91,40 @@ void Proceso::cerrar_materiales(){
 
 
 
+bool Proceso::verificar_materiales(string nombre_ingresado, int piedra_necesaria, int madera_necesaria, int metal_necesario, int construidos, int cantidad_max){
+
+	int errores = 0;
+	for(int i = 0; i < cantidad_materiales; i++){
+		if((material[i]->obtener_nombre_material() == "piedra") && (material[i]->obtener_cantidad_material() < piedra_necesaria)){				
+			imprimir_mensaje_error(nombre_ingresado, material[i]->obtener_nombre_material(), material[i]->obtener_cantidad_material(), piedra_necesaria);
+			errores++;
+		}
+			
+		if((material[i]->obtener_nombre_material() == "madera") && (material[i]->obtener_cantidad_material() < madera_necesaria)){
+			imprimir_mensaje_error(nombre_ingresado, material[i]->obtener_nombre_material(), material[i]->obtener_cantidad_material(), madera_necesaria);
+			errores++;
+		}
+				
+		if((material[i]->obtener_nombre_material() == "metal") && (material[i]->obtener_cantidad_material() < metal_necesario)){
+			imprimir_mensaje_error(nombre_ingresado, material[i]->obtener_nombre_material(), material[i]->obtener_cantidad_material(), metal_necesario);
+			errores++;
+		}
+			
+	}
+	if(errores > 0)
+		return false;
+	
+	//Verifica la cantidad de edificios construidos
+	if(construidos == cantidad_max){
+		cout << "Se ha llegado a la cantidad máxima permitida de: "<< nombre_ingresado << ". (Cantidad máxima = " << cantidad_max << "). No se pueden construir más" << endl;
+		return false;
+	}
+	
+	return true;
+}
+
+
+
 
 void Proceso::mostrar_inventario(){
 
@@ -183,15 +217,78 @@ void Proceso::agregar_tipo_edificio(Tipo_edificio* tipo_edificio){
 
 
 
+bool Proceso::verificar_edificio(string nombre_ingresado, int *piedra_necesaria, int *madera_necesaria, int *metal_necesario, int *construidos, int *cantidad_max){
 
+	int existe = 0;
+	
+	for(int i = 0; i < cantidad_edificios; i++){
+		//Verifica que exista el edificio ingresado
+		if(lista_edificios[i]->obtener_tipo() == nombre_ingresado){
+			*piedra_necesaria = lista_edificios[i]->obtener_piedra();
+			*madera_necesaria = lista_edificios[i]->obtener_madera();
+			*metal_necesario = lista_edificios[i]->obtener_metal();
+			*construidos = lista_edificios[i]->obtener_cant_construidos();
+			*cantidad_max = lista_edificios[i]->obtener_cant_max_construido();
+			existe = 1;
+		}
+	}
+	
+	if(existe == 0){
+		cout << "El edificio '" << nombre_ingresado << "' no existe" << endl << endl;
+		return false;
+	}
+	
+	return true;
+}
+
+
+
+
+void Proceso::listar_edificios_construidos(){
+
+	int construidos_total = 0;
+	long nombre_mas_largo = 0;
+	long nombre = 0;
+	
+	cout << endl << endl;
+	cout << "Lista de edificios construidos:" << endl << endl;
+	
+	cout << "            ═════════════════════════════════════════════════════════" << endl;
+	cout << "             Nombre\t\tCantidad\t\tCoordenadas"<< endl;
+	cout << "            ═════════════════════════════════════════════════════════" << endl;
+	
+	for(int i = 0; i < this ->cantidad_edificios; i++){
+		nombre = lista_edificios[i]->obtener_tipo().length();
+		if(nombre > nombre_mas_largo)
+			nombre_mas_largo = nombre;
+	}
+	for(int i = 0; i < this ->cantidad_edificios; i++){
+		if(this -> lista_edificios[i] -> obtener_cant_construidos() != 0){
+		
+			long espacio = nombre_mas_largo - lista_edificios[i]->obtener_tipo().length();
+			cout << "             " << lista_edificios[i]->obtener_tipo();
+			cout << setw(8 + (int)espacio);
+			cout << this -> lista_edificios[i] -> obtener_cant_construidos() << setw(20);
+			
+			for(int j = 0; j < lista_edificios[i] -> obtener_cant_construidos(); j++)
+		 		cout << "(" << this -> lista_edificios[i] -> obetener_edificios_construidos(j) -> obtener_fila() << ", " << this -> lista_edificios[i] -> obetener_edificios_construidos(j) -> obtener_columna() << ")";
+			
+			construidos_total += lista_edificios[i]->obtener_cant_construidos();
+			cout << endl;
+		}
+	}
+	cout << endl << endl;
+	cout << "Cantidad total de edificios construidos: " << construidos_total << endl << endl;
+
+}
 
 void Proceso::listar_edificios(){
 
 	cout << endl << endl;
 	cout << "Lista de edificios:" << endl << endl;
-	cout << "            ════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════" << endl;
-	cout << "             Nombre\t\tPiedra\t\tMadera\t\tMetal\t\tCantidad construida\tCuantos más se pueden construir"<< endl;
-	cout << "            ════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════" << endl;
+	cout << "            ══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════" << endl;
+	cout << "             Nombre\t\tPiedra\t\tMadera\t\tMetal\t\tConstruidos\tTodavía puede construir\t\t¿Brinda material?"<< endl;
+	cout << "            ══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════" << endl;
 	
 	long nombre_mas_largo = 0;
 	long nombre = 0;
@@ -203,13 +300,83 @@ void Proceso::listar_edificios(){
 	for(int i = 0; i < this->cantidad_edificios; i++){
 		long espacio = nombre_mas_largo - this -> lista_edificios[i] -> obtener_tipo().length();
 		cout << "             " << this -> lista_edificios[i] -> obtener_tipo();
-		cout << setw(12 + (int)espacio);
+		cout << setw(5 + (int)espacio);
 		cout << this -> lista_edificios[i] -> obtener_piedra() << setw(16);
 		cout << this -> lista_edificios[i] -> obtener_madera() << setw(16);
-		cout << this -> lista_edificios[i] -> obtener_metal() << setw(23);
-		cout << this -> lista_edificios[i] -> obtener_cant_max_construido() - this -> lista_edificios[i] -> obtener_cant_construidos() << endl;
+		cout << this -> lista_edificios[i] -> obtener_metal() << setw(18);
+		cout << this -> lista_edificios[i] -> obtener_cant_construidos() << setw(22);
+		cout << this -> lista_edificios[i] -> obtener_cant_max_construido() - this -> lista_edificios[i] -> obtener_cant_construidos() << setw(29);
+		if(this -> lista_edificios[i] -> brinda_material())
+			cout << " Sí"  << endl;
+		else
+			cout << "No" << endl;
 	}
+	cout << endl << endl;
 }
+
+
+
+bool Proceso::construir_edificio(string nombre_ingresado){
+	int piedra_necesaria = 0, madera_necesaria = 0, metal_necesario = 0, construidos = 0, cantidad_max = 0;
+	
+	//Verifica que el edificio ingresado exista
+	if(!verificar_edificio(nombre_ingresado, &piedra_necesaria, &madera_necesaria, &metal_necesario, &construidos, &cantidad_max)){
+		return false;
+	}
+	
+	//Verifica que se tengan todos los materiales
+	if(!verificar_materiales(nombre_ingresado, piedra_necesaria, madera_necesaria, metal_necesario, construidos, cantidad_max))
+		return false;
+	
+	int fila, columna;
+	cout << "¿Donde desea construir su " << nombre_ingresado << "? Ingrese la primer coordenada: " << endl;
+	cin >> fila;
+	cout << "Ingrese la segunda coordenada: " << endl;
+	cin >> columna;
+	
+	if(!verificar_coordenadas(fila, columna))
+		return false;
+	
+	char respuesta;
+	bool done = false;
+	
+	cout << "Todo listo para construir " << nombre_ingresado << ", ¿Está seguro que quiere seguir? [y/n]: ";
+	do{
+		cin >> respuesta;
+	
+		switch(respuesta){
+			case 'y':
+				cout << "El edificio ha sido construido correctamente" << endl << endl;
+				for(int i = 0; i < cantidad_materiales; i++){
+					if(material[i]->obtener_nombre_material() == "piedra")
+						material[i]->modificar_cantidad(piedra_necesaria);
+					if(material[i]->obtener_nombre_material() == "madera")
+						material[i]->modificar_cantidad(madera_necesaria);
+					if(material[i]->obtener_nombre_material() == "metal")
+						material[i]->modificar_cantidad(metal_necesario);
+				}
+				/*
+				for(int i = 0; i < cantidad_edificios; i++){
+					if(lista_edificios[i]->obtener_tipo() == nombre_ingresado)
+						lista_edificios[i]->obtener_cant_construidos()++;
+				}*/
+				done = true;
+				break;
+				
+			case 'n':
+				done = true;
+				break;
+				
+			default:
+				cout << "Ingrese una opción válida: ";
+				break;
+		}
+	}while(!done);
+
+	return true;
+
+}
+
 
 
 void Proceso::cerrar_edificios(){
@@ -220,7 +387,7 @@ void Proceso::cerrar_edificios(){
 	}
    
 	delete[] this->lista_edificios;
-	cout << "se termino de eliminar edificios" << endl;
+	cout << "Se cerró el archivo edificios" << endl;
 }
 
 
@@ -236,8 +403,8 @@ void Proceso::leer_ubicaciones(){
 	int posicion_edificio;
 
 	char caracter;
-	int fila = '0';
-	int columna = '0';
+	int fila;
+	int columna;
 	string tipo_edificio;
 	
 	while(archivo_ubicaciones >> tipo_edificio){
@@ -248,8 +415,14 @@ void Proceso::leer_ubicaciones(){
 		archivo_ubicaciones >> caracter;
 
 
+<<<<<<< HEAD
 		edificio  = new Edificio (fila , columna);
 		posicion_edificio = identificar_edificio(tipo_edificio);
+=======
+		edificio  = new Edificio (fila, columna);
+
+		posicion_edificio = identificar_edificio(edificio, tipo_edificio);
+>>>>>>> f777925b106583524d16eb9ea15f47d111624d2d
 
 		lista_edificios[posicion_edificio] -> agregar_edificio_construido(edificio);
 
@@ -320,12 +493,35 @@ void Proceso::leer_mapa(){
 	archivo_mapa.close();
 }
 
-void Proceso::mostrar_mapa(){
-	mapa->mostrar_mapa();
+
+
+bool Proceso::verificar_coordenadas(int fila, int columna){
+	
+	if(fila < 0 || fila > mapa->obtener_cantidad_filas()){
+		cout << "La fila ingresada está fuera de rango. No se puede construir el edificio" << endl;
+		return false;
+	}
+	
+	if(columna < 0 || columna > mapa->obtener_cantidad_columnas()){
+		cout << "La columna ingresada está fuera de rango. No se puede construir el edificio" << endl;
+		return false;
+	}
+
+		/*
+	for(int i = 0; i < cantidad_edificios; i++){
+		for(int j = 0; j < lista_edificios[i] -> obtener_cant_construidos(); j++){
+		
+			lista_edificios[i] -> obetener_edificios_construidos(j) -> obtener_fila();
+			lista_edificios[i] -> obetener_edificios_construidos(j) -> obtener_columna();*/
+	
+	return true;
 }
+
+
 
 void Proceso::cerrar_mapa(){
 	mapa -> liberar_casilleros();
+
 	delete mapa;
 }
 
@@ -357,11 +553,95 @@ void Proceso::mostrar_menu(){
 
 
 
+int pedir_opcion(){
+	
+	int opcion_elegida = 0;
+	cout << "Ingrese el número de la opción elegida: ";
+	cin >> opcion_elegida;
+	
+	while(opcion_elegida < 1 || opcion_elegida > 6){
+		cout << "ERROR" << endl << "Ingrese una opción válida: ";
+		cin >> opcion_elegida;
+	}
+	
+	return opcion_elegida;
+}
+
+
+
+void procesar_opciones(int opcion){
+	
+	string nombre_ingresado;
+	
+	switch(opcion){
+		case 1:
+			cout << "Ingrese el nombre del edificio que desea construir: ";
+			cin >> nombre_ingresado;
+			construir_edificio(nombre_ingresado);
+			break;
+			
+		case 2:
+			listar_edificios_construidos();
+			break;
+		
+		case 3:
+			listar_edificios();
+			break;
+		
+		case 4:
+			cout << "Ingrese el nombre del edificio que desea demoler: ";
+			cin >> coordenada;
+			//demoler_edificio(coordenada);
+			break;
+		
+		case 5:
+			//mostrar_mapa();
+			break;
+		
+		case 6:
+			//consultar_coordenada();
+			break;
+			
+		case 7:
+			mostrar_inventario();
+			break;
+		
+		case 8:
+			//recolectar_recursos();
+			break;
+		
+		case 9:
+			//lluvia_de_recursos();
+			break;
+	}
+}
+
+
+
+void Proceso::guardar_y_salir(){
+	cerrar_materiales();
+	cerrar_ubicaciones();
+	cerrar_mapa();
+}
+
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
 
+<<<<<<< HEAD
+=======
+
+void Proceso::imprimir_mensaje_error(string nombre_edificio, string material, int cantidad, int cantidad_necesaria){
+	cout << "No hay suficiente " << material << "." << endl;
+	cout << "Hay " << cantidad << " " << material << " disponibles. Se necesitan "<< cantidad_necesaria << " para construir " << nombre_edificio << endl << endl;
+}
+
+
+
+
+
+>>>>>>> f777925b106583524d16eb9ea15f47d111624d2d
 void Proceso::demoler_edificio_coordenada(){
 	int fila, columna;
 	mapa -> pedir_coordenada(fila, columna);
@@ -372,4 +652,8 @@ void Proceso::demoler_edificio_coordenada(){
 
 	}
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> f777925b106583524d16eb9ea15f47d111624d2d
 }	

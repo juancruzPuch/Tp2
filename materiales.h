@@ -28,6 +28,10 @@ class Material{
 		//Precondiciones: -
 		//Postcondicions: Devuelve la cantidad disponible del material
 		int obtener_cantidad_material();
+		
+		//Precondiciones: -
+		//Postcondicions: Modifica la cantidad de materiales
+		void modificar_cantidad(int cantidad_usada);
 
 		void establecer_nombre_material (string nombre);
 
