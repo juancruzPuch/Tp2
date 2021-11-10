@@ -38,6 +38,7 @@ class Proceso{
 		//Costructor 
 		Proceso();
 		
+		void mostrar_mapa();
 		//Precondiciones: -
 		//Postcondiciones: Guarda los datos del archivo de materiales
 		void leer_materiales();

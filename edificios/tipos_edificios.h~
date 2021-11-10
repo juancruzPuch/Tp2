@@ -16,11 +16,13 @@ class Tipo_edificio {
 		int cant_max_construido;
 		char caracter;
 
-		int cantidad_constuidos;
+		int cantidad_construidos;
 		bool brinda_materiales;
 		Edificio** edificios_construidos;
 
 	public:
+		
+		Tipo_edificio();
 		
 		//Precondiciones: -
 		//Postcondicions: Construye un objeto tipo edificio

@@ -13,8 +13,8 @@ public:
       Mapa();
       void inicializar_mapa(int cant_filas, int cant_columnas);
 
-      int obetener_cantidad_filas ();
-      int obetener_cantidad_columnas ();
+      int obtener_cantidad_filas ();
+      int obtener_cantidad_columnas ();
 
 
 

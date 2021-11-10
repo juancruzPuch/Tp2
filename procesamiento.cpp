@@ -1,5 +1,6 @@
 #include "materiales.h"
 #include "procesamiento.h"
+#include "edificios/edificio.h"
 #include "edificios/tipos_edificios.h"
 #include "edificios/parser.h"
 #include "edificios/edificio.h"
@@ -142,8 +143,9 @@ void Proceso::leer_opciones_edificios(){
         archivo_edificios >> lectura_edificios[2];
         archivo_edificios >> lectura_edificios[3];
         archivo_edificios >> lectura_edificios[4];
-
-		Parser parser (lectura_edificios);
+		
+		tipo_edificio = new Tipo_edificio();
+		Parser parser = Parser(lectura_edificios);
 		tipo_edificio = parser.procesar_entrada();
 
 
@@ -212,11 +214,11 @@ void Proceso::listar_edificios(){
 void Proceso::cerrar_edificios(){
 	
 	for(int i = 0; i < this->cantidad_edificios; i++){
+		lista_edificios[i] -> liberar_edificos_construidos();
 		delete this->lista_edificios[i];
 	}
-	
+   
 	delete[] this->lista_edificios;
-	this->lista_edificios = nullptr;
 }
 
 
@@ -229,7 +231,7 @@ void Proceso::leer_ubicaciones(){
 	fstream archivo_ubicaciones(PATH_UBICACIONES, ios::in);
 	Edificio* edificio;
 	
-	int posicicon_edificio;
+	int posicion_edificio;
 
 	char caracter;
 	int fila = '0';
@@ -246,9 +248,9 @@ void Proceso::leer_ubicaciones(){
 
 		edificio  = new Edificio (fila - '0', columna - '0');
 
-		posicicon_edificio = identificar_edificio(edificio, tipo_edificio);
+		posicion_edificio = identificar_edificio(edificio, tipo_edificio);
 
-		lista_edificios[posicicon_edificio] -> agregar_edificio_construido(edificio);
+		lista_edificios[posicion_edificio] -> agregar_edificio_construido(edificio);
 
 	}
 	archivo_ubicaciones.close();
@@ -271,11 +273,11 @@ int Proceso::identificar_edificio(Edificio* edificio, string tipo_edficio){
 void Proceso::cerrar_ubicaciones(){
 
 	ofstream archivo_ubicaciones(PATH_UBICACIONES);
-	Edificio* edificio = new Edificio;
+	Edificio* edificio;
 
 	for(int i = 0; i < cantidad_edificios; i++){
 		for(int j = 0; j < lista_edificios[i] -> obtener_cant_construidos(); j++){
-		
+			edificio = new Edificio();
 			edificio = lista_edificios[i] -> obetener_edificios_construidos(j);
 
 			archivo_ubicaciones << this -> lista_edificios[i] -> obtener_tipo() << " ("
@@ -283,10 +285,8 @@ void Proceso::cerrar_ubicaciones(){
 								<< edificio -> obtener_columna() << ')' << '\n';
 		}
 
-		lista_edificios[i] -> librerar_edificos_construidos();
-		delete lista_edificios[i];
 	}
-	delete [] lista_edificios;
+	cerrar_edificios();
 }
 
 
@@ -299,17 +299,16 @@ void Proceso::leer_mapa(){
 	
 	fstream archivo_mapa(PATH_MAPA, ios::in);
 	Casillero* casillero;
-	
+	Mapa *mapa = new Mapa();
 
 	char filas, columnas, caracter;
 	archivo_mapa >> filas;
 	archivo_mapa >> columnas;
-	cout << filas - '0' << columnas - '0';
 	
 	mapa -> inicializar_mapa(filas - '0', columnas - '0');
 	
-	for(int i = 0; i < mapa -> obetener_cantidad_filas(); i++){
-		for(int j = 0; j < mapa -> obetener_cantidad_columnas(); j++){
+	for(int i = 0; i < mapa -> obtener_cantidad_filas(); i++){
+		for(int j = 0; j < mapa -> obtener_cantidad_columnas(); j++){
 
 			archivo_mapa >> caracter;
 			casillero = mapa -> identificar_casillero (i, j, caracter);
@@ -317,14 +316,17 @@ void Proceso::leer_mapa(){
 		}
 	}
 	
-	
+	this->mapa = mapa;
 	archivo_mapa.close();
 }
 
-
+void Proceso::mostrar_mapa(){
+	mapa->mostrar_mapa();
+}
 
 void Proceso::cerrar_mapa(){
 	mapa -> liberar_casilleros();
+	delete mapa;
 }
 
 

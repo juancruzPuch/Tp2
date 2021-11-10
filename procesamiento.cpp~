@@ -1,7 +1,15 @@
+#include "materiales.h"
 #include "procesamiento.h"
-#include "edificios/tipos_edificios.h"
-#include "edificios/parcer.h"
 #include "edificios/edificio.h"
+#include "edificios/tipos_edificios.h"
+#include "edificios/parser.h"
+#include "edificios/edificio.h"
+#include "casilleros/casillero.h"
+#include "casilleros/casillero_construible.h"
+#include "casilleros/casillero_inaccesible.h"
+#include "casilleros/casillero_transitable.h"
+
+
 
 #include <iostream>
 #include <string>
@@ -21,8 +29,6 @@ Proceso::Proceso (){
 
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
-
-
 
 void Proceso::leer_materiales(){
 
@@ -117,8 +123,6 @@ void Proceso::mostrar_inventario(){
 
 
 
-
-
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -139,8 +143,9 @@ void Proceso::leer_opciones_edificios(){
         archivo_edificios >> lectura_edificios[2];
         archivo_edificios >> lectura_edificios[3];
         archivo_edificios >> lectura_edificios[4];
-
-		Parser parser (lectura_edificios);
+		
+		tipo_edificio = new Tipo_edificio();
+		Parser parser = Parser(lectura_edificios);
 		tipo_edificio = parser.procesar_entrada();
 
 
@@ -178,17 +183,6 @@ void Proceso::agregar_tipo_edificio(Tipo_edificio* tipo_edificio){
 
 
 
-void Proceso::cerrar_edificios(){
-	
-	for(int i = 0; i < this->cantidad_edificios; i++){
-		delete this->lista_edificios[i];
-	}
-	
-	delete[] this->lista_edificios;
-	this->lista_edificios = nullptr;
-}*
-
-
 
 void Proceso::listar_edificios(){
 
@@ -200,7 +194,7 @@ void Proceso::listar_edificios(){
 	
 	long nombre_mas_largo = 0;
 	long nombre = 0;
-	for(int i = 0; i < this->cantidad_edificios; i++){
+	for(int i = 0; i < this -> cantidad_edificios; i++){
 		nombre = this -> lista_edificios[i] -> obtener_tipo().length();
 		if(nombre > nombre_mas_largo)
 			nombre_mas_largo = nombre;
@@ -217,7 +211,15 @@ void Proceso::listar_edificios(){
 }
 
 
-
+void Proceso::cerrar_edificios(){
+	
+	for(int i = 0; i < this->cantidad_edificios; i++){
+		lista_edificios[i] -> liberar_edificos_construidos();
+		delete this->lista_edificios[i];
+	}
+   
+	delete[] this->lista_edificios;
+}
 
 
 
@@ -231,7 +233,9 @@ void Proceso::leer_ubicaciones(){
 	
 	int posicicon_edificio;
 
-	char caracter, fila, columna;
+	char caracter;
+	int fila = '0';
+	int columna = '0';
 	string tipo_edificio;
 	
 	while(archivo_ubicaciones >> tipo_edificio){
@@ -269,11 +273,11 @@ int Proceso::identificar_edificio(Edificio* edificio, string tipo_edficio){
 void Proceso::cerrar_ubicaciones(){
 
 	ofstream archivo_ubicaciones(PATH_UBICACIONES);
-	Edificio* edificio = new Edificio;
+	Edificio* edificio;
 
 	for(int i = 0; i < cantidad_edificios; i++){
 		for(int j = 0; j < lista_edificios[i] -> obtener_cant_construidos(); j++){
-		
+			edificio = new Edificio();
 			edificio = lista_edificios[i] -> obetener_edificios_construidos(j);
 
 			archivo_ubicaciones << this -> lista_edificios[i] -> obtener_tipo() << " ("
@@ -281,10 +285,8 @@ void Proceso::cerrar_ubicaciones(){
 								<< edificio -> obtener_columna() << ')' << '\n';
 		}
 
-		lista_edificios[i] -> librerar_edificos_construidos();
-		delete lista_edificios[i];
 	}
-	delete [] lista_edificios;
+	cerrar_edificios();
 }
 
 
@@ -293,80 +295,38 @@ void Proceso::cerrar_ubicaciones(){
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
-
-
 void Proceso::leer_mapa(){
-
+	
 	fstream archivo_mapa(PATH_MAPA, ios::in);
+	Casillero* casillero;
+	Mapa *mapa = new Mapa();
 
-	char filas, columnas;
-	char casillero;
-
+	char filas, columnas, caracter;
 	archivo_mapa >> filas;
 	archivo_mapa >> columnas;
-	this->mapa = new Mapa();
-	/*
-	//Creación de la matriz dinámica
-	mapa->mapa = new char * [filas - '0'];
 	
-	for(int i = 0; i < filas - '0'; i++)
-		mapa->mapa[i] = new char[columnas - '0'];
+	mapa -> inicializar_mapa(filas - '0', columnas - '0');
 	
-	mapa->cantidad_filas = filas - '0';
-	mapa->cantidad_columnas = columnas - '0';*/
-	
-	*mapa = Mapa(filas - '0', columnas - '0');
-	
-	//Asignación de valores a la matriz
-	for(int i = 0; i < mapa->obtener_filas(); i++){
-		for(int j = 0; j < mapa->obtener_columnas(); j++){
-			archivo_mapa >> casillero;
-			mapa->guardar_mapa(i, j, casillero);
+	for(int i = 0; i < mapa -> obtener_cantidad_filas(); i++){
+		for(int j = 0; j < mapa -> obtener_cantidad_columnas(); j++){
+
+			archivo_mapa >> caracter;
+			casillero = mapa -> identificar_casillero (i, j, caracter);
+			mapa -> agregar_casillero(casillero);
 		}
 	}
 	
 	this->mapa = mapa;
-	
 	archivo_mapa.close();
 }
 
-
-
-
-
-
-
-void Proceso::cerrar_mapa(){
-	
-	for(int i = 0; i < this->mapa->obtener_filas(); i++){
-		delete[] this->mapa->obtener_mapa()[i];
-	}
-	delete[] mapa->obtener_mapa();
-	delete mapa;
+void Proceso::mostrar_mapa(){
+	mapa->mostrar_mapa();
 }
 
-
-
-
-
-void Proceso::mostrar_mapa(){
-	
-	for(int i = 0; i < mapa->obtener_filas(); i++){
-		for(int j = 0; j < mapa->obtener_columnas(); j++){
-			
-			if(mapa->obtener_mapa()[i][j] == 'L')
-				cout << BGND_LIGHT_BLUE_32 << "      " << END_COLOR;
-			
-			if(mapa->obtener_mapa()[i][j] == 'T')
-				cout << BGND_GREEN_34 << "      " << END_COLOR;
-			
-			if(mapa->obtener_mapa()[i][j] == 'C')
-				cout << BGND_GRAY_240 << "      " << END_COLOR;
-		}
-		cout << endl;
-	}
-	cout << endl;
-
+void Proceso::cerrar_mapa(){
+	mapa -> liberar_casilleros();
+	delete mapa;
 }
 
 
@@ -395,8 +355,3 @@ void Proceso::mostrar_menu(){
 	cout << "            ╚═══════════════════════════════════════╝" << endl << endl;
 }
 
-void Proceso::guardar_y_salir(){
-	cerrar_materiales();
-	cerrar_ubicaciones();
-	cerrar_mapa();
-}

@@ -13,12 +13,19 @@ int main(){
 	proceso.leer_ubicaciones();
 	//proceso.leer_mapa();
 
-	proceso.listar_edificios();
+	//proceso.listar_edificios();
+	proceso.mostrar_mapa();
 		
 	proceso.cerrar_materiales();
+<<<<<<< HEAD
 	//proceso.cerrar_ubicaciones();
 	//proceso.cerrar_mapa();
 	proceso.cerrar_edificios();
+=======
+	proceso.cerrar_ubicaciones();
+	proceso.cerrar_mapa();
+	//proceso.cerrar_edificios();
+>>>>>>> f6b9fbad88873562ec0482606135fbd38f4b7ab1
 
 	cout << "todo ok" << endl;
 	
