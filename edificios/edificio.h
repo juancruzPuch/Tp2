@@ -8,7 +8,9 @@ class Edificio{
 		int columna;
 		
 	public:
-	
+
+		~Edificio();
+
 		//Precondiciones: -
 		//Postcondicions: construye un objeto edificio
 		Edificio(int fila, int columna);

@@ -133,7 +133,7 @@ void Proceso::leer_opciones_edificios(){
 	
 	fstream archivo_edificios(PATH_EDIFICIOS, ios::in);
 
-	
+
 	Tipo_edificio* tipo_edificio;
     std::string lectura_edificios[CANT_CARACTERISTICAS_EDIFICIOS];
 
@@ -145,7 +145,7 @@ void Proceso::leer_opciones_edificios(){
         archivo_edificios >> lectura_edificios[3];
         archivo_edificios >> lectura_edificios[4];
 		
-		tipo_edificio = new Tipo_edificio();
+		
 		Parser parser = Parser(lectura_edificios);
 		tipo_edificio = parser.procesar_entrada();
 
@@ -220,6 +220,7 @@ void Proceso::cerrar_edificios(){
 	}
    
 	delete[] this->lista_edificios;
+	cout << "se termino de eliminar edificios" << endl;
 }
 
 
@@ -274,20 +275,19 @@ int Proceso::identificar_edificio(Edificio* edificio, string tipo_edficio){
 void Proceso::cerrar_ubicaciones(){
 
 	ofstream archivo_ubicaciones(PATH_UBICACIONES);
-	Edificio* edificio;
 
 	for(int i = 0; i < cantidad_edificios; i++){
 		for(int j = 0; j < lista_edificios[i] -> obtener_cant_construidos(); j++){
-			edificio = new Edificio();
-			edificio = lista_edificios[i] -> obetener_edificios_construidos(j);
+			
 
 			archivo_ubicaciones << this -> lista_edificios[i] -> obtener_tipo() << " ("
-								<< edificio -> obtener_fila() << ", "
-								<< edificio -> obtener_columna() << ')' << '\n';
+								<< lista_edificios[i] -> obetener_edificios_construidos(j) -> obtener_fila() << ", "
+								<< lista_edificios[i] -> obetener_edificios_construidos(j) -> obtener_columna() << ')' << '\n';
 		}
 
 	}
 	cerrar_edificios();
+	archivo_ubicaciones.close();
 }
 
 

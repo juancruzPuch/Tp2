@@ -2,6 +2,10 @@
 
 #include "edificio.h"
 
+Edificio::~Edificio(){
+    std::cout << "Se destruyo un edificioooo" << std::endl;
+}
+
 //Cosntructor 
 Edificio::Edificio(int fila, int columna){
     this -> fila = fila;

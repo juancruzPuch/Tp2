@@ -15,7 +15,7 @@ Parser::Parser (std::string* lectura){
 }
 
 Tipo_edificio* Parser::procesar_entrada(){
-    Tipo_edificio* tipo_edificio = new Tipo_edificio();
+    Tipo_edificio* tipo_edificio;
     
     if (this -> tipo_edificio() == "aserradero"){
         tipo_edificio = new Aserradero (piedra(), madera(), metal(), cant_max_construido(), this -> tipo_edificio());
