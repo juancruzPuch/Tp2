@@ -68,15 +68,45 @@ void Mapa::mostrar_mapa(){
 
 }
 
-int Mapa::pedir_coordenada(int limite){
-	int coordenada;
-	std::cin >> coordenada;
-	while (coordenada > limite || coordenada < 0){
-		cout << "Coordenada invalida." << endl;
-		cout << "Ingrese la coordenada nuevamente (" << limite << " -  0)" << endl;
-		cin >> coordenada;
+
+Casillero* Mapa::obtener_casillero(int fila, int columna){
+	return casilleros[fila][columna];
+}
+
+bool Mapa::se_puede_demoler(int fila, int columna){
+	bool es_demolible = false;
+	Casillero_construible* casillero_para_demoler;
+
+	if ( ! casilleros[fila][columna] -> es_construible() ){
+
+		cout << "NO se puede construir en este casillero pq es un casillero " << casilleros[fila][columna]->obtener_tipo();
+		cout << endl;
 	}
-	return coordenada;
+	else if ( ! casilleros[fila][columna] -> hay_edificio() ){
+
+		cout << "NO se puede construir en este casillero no hay ningun edificio construido";
+	}
+	else {
+		es_demolible = true;
+	}
+	return es_demolible;
+}
+
+
+void Mapa::pedir_coordenada(int &fila, int &columna){
+
+	std::cin >> fila;
+	std::cin >> columna;
+	while (fila > cantidad_filas || fila < 0 || columna > cantidad_columnas || columna < 0){
+		cout << "Coordenada invalida." << endl;
+		cout << "Ingrese la coordenada nuevamente -> fil (" << cantidad_filas << " - 0)" << endl;
+		cout << "                                 -> col (" << cantidad_columnas << " - 0)" << endl;
+		cout << "fila ->  ";
+		cin >> fila;
+		cout << "columna ->  ";
+		cin >> columna;
+	}
+
 }
 
 

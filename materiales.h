@@ -29,6 +29,10 @@ class Material{
 		//Postcondicions: Devuelve la cantidad disponible del material
 		int obtener_cantidad_material();
 
+		void establecer_nombre_material (string nombre);
+
+		void establecer_cantidad (int cantidad);
+
 };
 
 #endif

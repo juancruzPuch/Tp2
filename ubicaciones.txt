@@ -1,4 +1,4 @@
-fabrica (-239, -238)
-mina (-237, -236)
-mina (-235, -234)
-planta_electrica (-233, -232)
+fabrica (1, 2)
+mina (3, 4)
+mina (5, 6)
+planta_electrica (7, 8)

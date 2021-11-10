@@ -25,9 +25,13 @@ public:
       //Postcondicions: Muestra un dibujo del mapa 
       void mostrar_mapa ();
 
+      bool se_puede_demoler (int fila, int columna);
+
+      Casillero* obtener_casillero(int fila, int columna);
+
       //Precondiciones: un numero mayor a 0
       //Postcondicions: devuelve un numero entre el limite y 0
-      int pedir_coordenada (int limite);
+      void pedir_coordenada (int &fila, int &columna);
 
 
 
