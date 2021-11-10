@@ -15,3 +15,6 @@ int Material::obtener_cantidad_material(){
 	return this->cantidad_material;
 }
 
+void Material::modificar_cantidad(int cantidad_usada){
+	this->cantidad_material -= cantidad_usada;
+}

@@ -4,8 +4,8 @@
 #include "casillero.h"
 
 class Casillero_inaccesible: public Casillero{
-	public:
-		Casillero_inaccesible(int fila, int columna, char caracter);
+public:
+    Casillero_inaccesible(int fila, int columna, char caracter);
 };
 
 

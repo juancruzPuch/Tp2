@@ -53,13 +53,21 @@ class Tipo_edificio {
 		int obtener_cant_construidos();
 		
 		//Precondiciones: -
+		//Postcondicions: Espeifica si el edificio brinda materiales o no
+		bool brinda_material();
+		
+		
+		//Precondiciones: -
 		//Postcondicions: Devuelve los edificios construidos
 		Edificio* obetener_edificios_construidos(int posisicion_edificio);
 		
+
 		//Precondiciones: -
 		//Postcondiciones: Agrega el edificio leído a la lista de edificios construidos
 		void agregar_edificio_construido(Edificio* edificio);
 
+		//Precondiciones: el edificio tiene que existir
+		//Postcondiciones: destruye un edificio
 		void derribar_edificio_construido(int fila, int columna);
 		
 		//Precondiciones: -

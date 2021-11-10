@@ -4,8 +4,8 @@
 #include "casillero.h"
 
 class Casillero_transitable: public Casillero{
-	public:
-		Casillero_transitable(int fila, int columna, char caracter);
+public:
+    Casillero_transitable(int fila, int columna, char caracter);
 };
 
 

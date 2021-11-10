@@ -1,7 +1,5 @@
 #include "materiales.h"
 
-using namespace std;
-
 Material::Material(){
 }
 

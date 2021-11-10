@@ -42,6 +42,10 @@ std::string Tipo_edificio::obtener_tipo(){
 int Tipo_edificio::obtener_cant_construidos(){
     return cantidad_construidos;
 }
+
+bool Tipo_edificio::brinda_material(){
+	return brinda_materiales;
+}
 Edificio* Tipo_edificio::obetener_edificios_construidos(int posisicion_edificio){
     return edificios_construidos[posisicion_edificio];
 }

@@ -38,6 +38,10 @@ int Mapa::obtener_cantidad_columnas(){
     return cantidad_columnas;
 }
 
+Casillero* Mapa::tipo_casillero(int fila, int columna){
+	return casilleros[fila][columna];
+}
+
 Casillero* Mapa::identificar_casillero(int fila, int columna, char caracter){
 	Casillero* casillero;
 	if (caracter == 'L'){
@@ -66,6 +70,18 @@ void Mapa::mostrar_mapa(){
 	}
 	cout << endl;
 
+}
+
+char** Mapa::obtener_mapa(){
+	char **mapa = new char*[cantidad_filas];
+	for(int i = 0; i < cantidad_filas; i++)
+		mapa[i] = new char[cantidad_columnas];
+		
+	for(int i = 0; i < cantidad_filas; i++){
+		for(int j = 0; j < cantidad_columnas; j++)
+			mapa[i][j] = casilleros[i][j]->obtener_caracter();
+	}
+	return mapa;
 }
 
 int Mapa::pedir_coordenada(int limite){

@@ -13,8 +13,10 @@ int main(){
 	proceso.leer_ubicaciones();
 	proceso.leer_mapa();
 
-	proceso.listar_edificios();
-	proceso.mostrar_mapa();
+	//proceso.listar_edificios();
+	//proceso.listar_edificios_construidos();
+	//proceso.mostrar_mapa();
+	proceso.construir_edificio("escuela");
 		
 	proceso.cerrar_materiales();
 	proceso.cerrar_ubicaciones();
