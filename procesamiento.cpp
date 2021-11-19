@@ -16,6 +16,7 @@
 #include <fstream>
 #include <iomanip>
 #include <cstdlib>
+#include <stdlib.h>
 
 const int CANT_CARACTERISTICAS_EDIFICIOS = 5;
 
@@ -135,7 +136,7 @@ void Proceso::mostrar_inventario(){
 	cout << "             Materiales        Cantidades"<< endl;
 	cout << "            ═══════════════════════════════" << endl;
 	
-	for(int i = 0; i < this->cantidad_edificios; i++){
+	for(int i = 0; i < this->cantidad_materiales; i++){
 		nombre = this->material[i]->obtener_nombre_material().length();
 		if(nombre > nombre_mas_largo)
 			nombre_mas_largo = nombre;
@@ -144,9 +145,11 @@ void Proceso::mostrar_inventario(){
 	for(int i = 0; i < this->cantidad_materiales; i++){
 		long espacio = nombre_mas_largo - this->material[i]->obtener_nombre_material().length();
 		cout << "              " << this->material[i]->obtener_nombre_material();
-		cout << setw(23 + (int)espacio);
+		cout << setw(17 + (int)espacio);
 		cout << this->material[i]->obtener_cantidad_material() <<endl;
 	}
+	
+	cout << endl << endl;
 }
 
 
@@ -335,10 +338,16 @@ bool Proceso::construir_edificio(string nombre_ingresado){
 	cout << "Todo listo para construir " << nombre_ingresado << ", ¿Está seguro que quiere seguir? [y/n]: ";
 	do{
 		cin >> respuesta;
-	
+		Edificio* edificio;
+		int posicion_edificio;
 		switch(respuesta){
 			case 'y':
 				cout << "El edificio ha sido construido correctamente" << endl << endl;
+				edificio  = new Edificio (fila , columna);
+				posicion_edificio = identificar_edificio(nombre_ingresado);
+				lista_edificios[posicion_edificio] -> agregar_edificio_construido(edificio);
+
+				mapa -> obtener_casillero(fila, columna) -> establecer_tipo(nombre_ingresado);
 				for(int i = 0; i < cantidad_materiales; i++){
 					if(material[i]->obtener_nombre_material() == "piedra")
 						material[i]->modificar_cantidad(piedra_necesaria);
@@ -347,11 +356,7 @@ bool Proceso::construir_edificio(string nombre_ingresado){
 					if(material[i]->obtener_nombre_material() == "metal")
 						material[i]->modificar_cantidad(metal_necesario);
 				}
-				/*
-				for(int i = 0; i < cantidad_edificios; i++){
-					if(lista_edificios[i]->obtener_tipo() == nombre_ingresado)
-						lista_edificios[i]->obtener_cant_construidos()++;
-				}*/
+
 				done = true;
 				break;
 				
@@ -367,6 +372,40 @@ bool Proceso::construir_edificio(string nombre_ingresado){
 
 	return true;
 
+}
+
+void Proceso::agregar_recursos(string nombre_edificio){
+	if(nombre_edificio == "mina"){
+		
+		for(int i = 0; i < cantidad_materiales; i++){
+			if(material[i]->obtener_nombre_material() == "piedra")
+				material[i]->modificar_cantidad(PIEDRA_AGREGADA);
+		}
+	}
+		
+	if(nombre_edificio == "aserradero"){
+		for(int i = 0; i < cantidad_materiales; i++){
+			if(material[i]->obtener_nombre_material() == "madera")
+				material[i]->modificar_cantidad(MADERA_AGREGADA);
+		}		
+	}
+	
+	if(nombre_edificio == "fabrica"){
+		for(int i = 0; i < cantidad_materiales; i++){
+			if(material[i]->obtener_nombre_material() == "metal")
+				material[i]->modificar_cantidad(METAL_AGREGADO);
+		}		
+	}
+
+}
+
+void Proceso::recolectar_recursos(){
+	for(int i = 0; i < this->cantidad_edificios; i++){
+		if(this -> lista_edificios[i] -> brinda_material())
+			agregar_recursos(this -> lista_edificios[i] -> obtener_tipo());		
+	}
+	
+	cout << "Se recolectaron todos los recursos disponibles" << endl;
 }
 
 
@@ -410,6 +449,8 @@ void Proceso::leer_ubicaciones(){
 		posicion_edificio = identificar_edificio(tipo_edificio);
 
 		lista_edificios[posicion_edificio] -> agregar_edificio_construido(edificio);
+		mapa -> obtener_casillero(fila, columna) -> establecer_tipo(tipo_edificio);
+
 
 	}
 	archivo_ubicaciones.close();
@@ -427,6 +468,7 @@ int Proceso::identificar_edificio(string tipo_edficio){
 	
 	return posicion_edificio;
 }
+
 
 
 void Proceso::cerrar_ubicaciones(){
@@ -459,11 +501,14 @@ void Proceso::leer_mapa(){
 	Casillero* casillero;
 	Mapa *mapa = new Mapa();
 
-	char filas, columnas, caracter;
+	int filas = '0';
+	int columnas = '0';
+	char caracter;
 	archivo_mapa >> filas;
 	archivo_mapa >> columnas;
 	
-	mapa -> inicializar_mapa(filas - '0', columnas - '0');
+	mapa -> inicializar_mapa(filas , columnas);
+
 	
 	for(int i = 0; i < mapa -> obtener_cantidad_filas(); i++){
 		for(int j = 0; j < mapa -> obtener_cantidad_columnas(); j++){
@@ -493,23 +538,11 @@ bool Proceso::verificar_coordenadas(int fila, int columna){
 		return false;
 	}
 
-		/*
-	for(int i = 0; i < cantidad_edificios; i++){
-		for(int j = 0; j < lista_edificios[i] -> obtener_cant_construidos(); j++){
-		
-			lista_edificios[i] -> obetener_edificios_construidos(j) -> obtener_fila();
-			lista_edificios[i] -> obetener_edificios_construidos(j) -> obtener_columna();*/
-	
+
 	return true;
 }
 
 
-
-void Proceso::cerrar_mapa(){
-	mapa -> liberar_casilleros();
-
-	delete mapa;
-}
 
 
 
@@ -518,6 +551,13 @@ void Proceso::cerrar_mapa(){
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
 
+
+void Proceso::leer_archivos(){
+	leer_materiales();
+	leer_opciones_edificios();
+	leer_mapa();
+	leer_ubicaciones();
+}
 
 void Proceso::mostrar_menu(){
 	cout << endl << endl;
@@ -539,14 +579,14 @@ void Proceso::mostrar_menu(){
 
 
 
-int pedir_opcion(){
+int Proceso::pedir_opcion(){
 	
 	int opcion_elegida = 0;
 	cout << "Ingrese el número de la opción elegida: ";
 	cin >> opcion_elegida;
 	
-	while(opcion_elegida < 1 || opcion_elegida > 6){
-		cout << "ERROR" << endl << "Ingrese una opción válida: ";
+	while(opcion_elegida < 1 || opcion_elegida > 10){
+		cout << "La opción elegida no es válida" << endl << "Ingrese una opción válida: ";
 		cin >> opcion_elegida;
 	}
 	
@@ -555,7 +595,7 @@ int pedir_opcion(){
 
 
 
-void procesar_opciones(int opcion){
+void Proceso::procesar_opciones(int opcion){
 	
 	string nombre_ingresado;
 	
@@ -575,16 +615,15 @@ void procesar_opciones(int opcion){
 			break;
 		
 		case 4:
-
-			//demoler_edificio(coordenada);
+			demoler_edificio_coordenada();
 			break;
 		
 		case 5:
-			//mostrar_mapa();
+			mostrar_mapa();
 			break;
 		
 		case 6:
-			//consultar_coordenada();
+			consultar_coordenada();
 			break;
 			
 		case 7:
@@ -592,11 +631,15 @@ void procesar_opciones(int opcion){
 			break;
 		
 		case 8:
-			//recolectar_recursos();
+			recolectar_recursos();
 			break;
 		
 		case 9:
-			//lluvia_de_recursos();
+			lluvia_elementos();
+			break;
+		
+		case 10:
+			guardar_y_salir();
 			break;
 	}
 }
@@ -638,30 +681,6 @@ void Proceso::cerrar_mapa(){
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
-
-
-void Proceso::mostrar_menu(){
-	cout << endl << endl;
-	cout << TXT_ITALIC << TXT_LIGHT_AQUA_123 << "\t            ¡BIENVENIDOS A ANDYPOLIS!" << END_COLOR << endl << endl;
-	cout << "                        " << TXT_UNDERLINE << "Menú de opciones" << END_COLOR << endl << endl;
-	cout << "            ╔═══════════════════════════════════════╗" << endl;
-	cout << "            ║ 1. Construir edificio por nombre      ║" << endl;
-	cout << "            ║ 2. Listar los edificios construidos   ║" << endl;
-	cout << "            ║ 3. Listar todos los edificios         ║" << endl;
-	cout << "            ║ 4. Demoler un edificio por coordenada ║" << endl;
-	cout << "            ║ 5. Mostrar mapa                       ║" << endl;
-	cout << "            ║ 6. Consultar coordenada               ║" << endl;
-	cout << "            ║ 7. Mostrar inventario                 ║" << endl;
-	cout << "            ║ 8. Recolectar recursos producidos     ║" << endl;
-	cout << "            ║ 9. LLuvia de recursos                 ║" << endl;
-	cout << "            ║ 10. Guardar y salir                   ║" << endl;
-	cout << "            ╚═══════════════════════════════════════╝" << endl << endl;
-}
-
-
-
-//----------------------------------------------------------------------------------------------------------------------------------------------------
-
 int Proceso::identificar_material(string nombre_material){
 	int posicion_material = 0;
 	while (material[posicion_material] -> obtener_nombre_material() != nombre_material){
@@ -697,5 +716,55 @@ void Proceso::demoler_edificio_coordenada(){
 		aumentar_materiales_derrumbe(lista_edificios[posicion]);
 
 	}
-
 }	
+
+
+void Proceso::consultar_coordenada(){
+	int fila,columna;
+	mapa -> pedir_coordenada(fila,columna);
+	mapa -> obtener_casillero(fila, columna) -> responder();
+}
+
+
+
+void Proceso::lluvia_elementos(){
+	bool genero_piedra = false;
+	bool genero_madera = false;
+	bool genero_metal = false;
+	int cantidad_piedra = 1 + rand() % 2;
+	int cantidad_madera =  rand() % 2;
+	int cantidad_metal = 2 + rand() % 5;
+	int contador_piedra = 0;
+	int contador_madera = 0;
+	int contador_metal = 0;
+
+	while (!genero_madera || !genero_metal || !genero_piedra){
+		int fil_random = rand()% (mapa -> obtener_cantidad_filas() +1);
+		int col_random = rand()% (mapa -> obtener_cantidad_columnas() +1);
+		if (mapa -> obtener_casillero(fil_random,col_random) -> es_transitable()){
+			if (!genero_piedra){
+				mapa -> obtener_casillero(fil_random,col_random) -> establecer_cantidad_material(1);
+				mapa -> obtener_casillero(fil_random,col_random) -> establecer_tipo("piedra");
+				if (cantidad_piedra == contador_piedra){
+					genero_piedra = true;
+				}
+			}
+			else if (!genero_madera){
+				mapa -> obtener_casillero(fil_random,col_random) -> establecer_cantidad_material(1);
+				mapa -> obtener_casillero(fil_random,col_random) -> establecer_tipo("madera");
+				if (cantidad_madera == contador_madera){
+					genero_madera = true;
+				}
+			else if (!genero_metal){
+				mapa -> obtener_casillero(fil_random,col_random) -> establecer_cantidad_material(1);
+				mapa -> obtener_casillero(fil_random,col_random) -> establecer_tipo("metal");
+				if (cantidad_metal == contador_metal){
+					genero_metal = true;
+				}
+			}
+		}
+		}
+
+			
+	}
+}

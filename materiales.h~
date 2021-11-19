@@ -32,6 +32,10 @@ class Material{
 		//Precondiciones: -
 		//Postcondicions: Modifica la cantidad de materiales
 		void modificar_cantidad(int cantidad_usada);
+		
+		//Precondiciones: -
+		//Postcondicions: Agrega material
+		void agregar_cantidad(int recurso_agregado);
 
 };
 

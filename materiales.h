@@ -30,8 +30,12 @@ class Material{
 		int obtener_cantidad_material();
 		
 		//Precondiciones: -
-		//Postcondicions: Modifica la cantidad de materiales
+		//Postcondicions: Disminuye la cantidad de materiales
 		void modificar_cantidad(int cantidad_usada);
+		
+		//Precondiciones: -
+		//Postcondicions: Agrega material
+		void agregar_cantidad(int recurso_agregado);
 
 		void establecer_nombre_material (string nombre);
 

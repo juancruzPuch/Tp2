@@ -14,6 +14,9 @@
 #define PATH_EDIFICIOS "edificios.txt"
 #define PATH_UBICACIONES "ubicaciones.txt"
 #define PATH_MAPA "mapa.txt"
+#define PIEDRA_AGREGADA 15
+#define MADERA_AGREGADA 25
+#define METAL_AGREGADO 40
 
 #define TXT_LIGHT_AQUA_123 "\033[38;5;123m"
 #define END_COLOR "\033[0m"
@@ -37,6 +40,10 @@ class Proceso{
 
 		//Costructor 
 		Proceso();
+		
+		//Precondiciones: -
+		//Postcondiciones: Guarda los datos de todos los archivos
+		void leer_archivos();
 		
 		void mostrar_mapa();
 		//Precondiciones: -
@@ -63,6 +70,14 @@ class Proceso{
 		//Precondiciones: Se tiene que haber leído bien el archivo de edificio
 		//Postcondiciones: Agrega el edificio leído a la lista de edificios disponibles
 		void agregar_tipo_edificio(Tipo_edificio* tipo_edificio);
+		
+		//Precondiciones: -
+		//Postcondiciones: Agrega cantidades de material dependiendo del edificio ingresado
+		void agregar_recursos(string nombre_edificio);
+		
+		//Precondiciones: -
+		//Postcondiciones: Recolecta los materiales generados por los edificios
+		void recolectar_recursos();
 		
 		//Precondiciones: Se tiene que haber leído bien el archivo de ubicaciones //(modificar)
 		//Postcondiciones: Agrega la ubicación leída a la lista de ubicaciones
@@ -105,6 +120,11 @@ class Proceso{
 
 		void aumentar_materiales_derrumbe(Tipo_edificio* tipo_edificio);
 
+		void consultar_coordenada();
+
+		void lluvia_elementos();
+
+		void modificar_materiales();
 
 		//Precondiciones: -
 		//Postcondiciones: Imprime los materiales disponibles

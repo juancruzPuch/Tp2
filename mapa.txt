@@ -1,3 +1,14 @@
-2 3
-C L T
-C T L
+11 12
+T T T T T T T T T T T T 
+T T T T T T T T T T T T 
+T T T T T T T T T T T T 
+T T T T T T T T T T T T 
+T T T T T T T T T T T T 
+T T T T T T T T T T T T 
+T T T T T T T T T T T T 
+T T T T T T T T T T T T 
+T T T T T T T T T T T T 
+T T T T T T T T T T T T 
+T T T T T T T T T T T T 
+
+

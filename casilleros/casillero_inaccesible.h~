@@ -4,8 +4,14 @@
 #include "casillero.h"
 
 class Casillero_inaccesible: public Casillero{
-public:
-    Casillero_inaccesible(int fila, int columna, char caracter);
+
+	public:
+		Casillero_inaccesible(int fila, int columna, char caracter);
+		std::string obtener_tipo();
+		int obtener_cantidad_material();
+
+	public:
+		Casillero_inaccesible(int fila, int columna, char caracter);
 };
 
 

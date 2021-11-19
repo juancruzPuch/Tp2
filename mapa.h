@@ -6,9 +6,10 @@
 class Mapa{
 
 	private:
-		int cantidad_filas;
-		int cantidad_columnas;
-		Casillero*** casilleros;
+		  int cantidad_filas;
+		  int cantidad_columnas;
+		  Casillero*** casilleros;
+
 		
 	public:
 	
@@ -38,6 +39,11 @@ class Mapa{
 		//Precondiciones: -
 		//Postcondiciones: Agrega el casillero leído a la lista de casilleros
 		void agregar_casillero(Casillero* casillero);
+		
+		bool se_puede_demoler (int fila, int columna);
+
+      	Casillero* obtener_casillero(int fila, int columna);
+
 
 		//Precondiciones: -
 		//Postcondicions: Muestra un dibujo del mapa 
@@ -47,14 +53,17 @@ class Mapa{
 		//Postcondicions: devuelve un numero entre el limite y 0
 		void pedir_coordenada(int &fila, int &columna);
 
-		bool se_puede_demoler(int fila, int columna);
+		
 
-		Casillero* obtener_casillero(int fila, int columna);
+	
 
 
 		//Precondiciones: -
 		//Postcondiciones: Libera la memoria utilizada por los casilleros
 		void liberar_casilleros ();
+	private:
+		void identificar_contenido (Casillero* casillero);
+
 };
 
 

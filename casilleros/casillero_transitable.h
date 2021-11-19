@@ -13,6 +13,11 @@ public:
     void establecer_tipo(std::string tipo);
     int obtener_cantidad_material();
     void establecer_cantidad_material(int cantidad);
+	void establecer_recursos();
+    void establecer_caracter_contenido();
+	void responder();
+    void establecer_caracter_contenido(std::string caracter);
+    std::string obtener_caracter_contenido();
     void liberar();
 
 };
