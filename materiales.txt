@@ -1,4 +1,4 @@
 oro 130
-piedra 75
-metal 158
-madera 325
+piedra 25
+metal 108
+madera 275

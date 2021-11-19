@@ -8,7 +8,6 @@ using namespace std;
 Tipo_edificio::Tipo_edificio(){
 }
 Tipo_edificio::~Tipo_edificio(){
-    cout<< "se destruyo un " << tipo_edificio << endl;
 }
 
 //Constructor

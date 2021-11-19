@@ -417,7 +417,6 @@ void Proceso::cerrar_edificios(){
 	}
    
 	delete[] this->lista_edificios;
-	cout << "Se cerró el archivo edificios" << endl;
 }
 
 
@@ -739,32 +738,36 @@ void Proceso::lluvia_elementos(){
 	int contador_metal = 0;
 
 	while (!genero_madera || !genero_metal || !genero_piedra){
-		int fil_random = rand()% (mapa -> obtener_cantidad_filas() +1);
-		int col_random = rand()% (mapa -> obtener_cantidad_columnas() +1);
+		int fil_random = rand()% (mapa -> obtener_cantidad_filas());
+		int col_random = rand()% (mapa -> obtener_cantidad_columnas());
 		if (mapa -> obtener_casillero(fil_random,col_random) -> es_transitable()){
 			if (!genero_piedra){
 				mapa -> obtener_casillero(fil_random,col_random) -> establecer_cantidad_material(1);
 				mapa -> obtener_casillero(fil_random,col_random) -> establecer_tipo("piedra");
+				contador_piedra ++;
 				if (cantidad_piedra == contador_piedra){
 					genero_piedra = true;
 				}
 			}
 			else if (!genero_madera){
-				mapa -> obtener_casillero(fil_random,col_random) -> establecer_cantidad_material(1);
-				mapa -> obtener_casillero(fil_random,col_random) -> establecer_tipo("madera");
-				if (cantidad_madera == contador_madera){
+				if (cantidad_madera == 0){
 					genero_madera = true;
 				}
+				else {
+					mapa -> obtener_casillero(fil_random,col_random) -> establecer_cantidad_material(1);
+					mapa -> obtener_casillero(fil_random,col_random) -> establecer_tipo("madera");
+					contador_madera ++;
+				}
+			}
 			else if (!genero_metal){
+
 				mapa -> obtener_casillero(fil_random,col_random) -> establecer_cantidad_material(1);
 				mapa -> obtener_casillero(fil_random,col_random) -> establecer_tipo("metal");
+				contador_metal ++;
 				if (cantidad_metal == contador_metal){
 					genero_metal = true;
 				}
 			}
-		}
-		}
-
-			
+		}			
 	}
 }

@@ -140,13 +140,14 @@ bool Mapa::se_puede_demoler(int fila, int columna){
 
 
 void Mapa::pedir_coordenada(int &fila, int &columna){
-	std::cout << "Ingrese la fila del edificio que desea derribar: ";
+	std::cout << "Ingrese la fila: ";
 	std::cin >> fila;
 	std::cout << std::endl;
-	std::cout << "Ingrese la fila del edificio que desea derribar: ";
+	std::cout << "Ingrese la columna: ";
 	std::cin >> columna;
 	std::cout  << std::endl;
 	while (fila > cantidad_filas || fila < 0 || columna > cantidad_columnas || columna < 0){
+		cout << "Coordenada incorrecta" << endl;
 		cout << "Ingrese la coordenada nuevamente -> fil (" << cantidad_filas << " - 0)" << endl;
 		cout << "                                 -> col (" << cantidad_columnas << " - 0)" << endl;
 		cout << "fila ->  ";

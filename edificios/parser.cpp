@@ -36,7 +36,7 @@ Tipo_edificio* Parser::procesar_entrada(){
         tipo_edificio = new Planta_electrica (piedra(), madera(), metal(), cant_max_construido(), this -> tipo_edificio());
     }
     else {
-        std::cout << "hay un edificio que no existe" << std::endl; 
+        std::cout << "Hay un edificio que no existe" << std::endl; 
     }
     
     return tipo_edificio;
