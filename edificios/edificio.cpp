@@ -3,7 +3,6 @@
 #include "edificio.h"
 
 Edificio::~Edificio(){
-    std::cout << "Se destruyo un edificioooo" << std::endl;
 }
 
 //Cosntructor 
